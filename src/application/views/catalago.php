@@ -1,47 +1,52 @@
-
-<form role="form" method="get" action="<?=site_url(); ?>">
-	<input type="hidden" name="c" value="<?=$catId; ?>">
-	<div class="input-group">
-		<input type="text" class="form-control" name="q" value="<?=$search; ?>">
-		<span class="input-group-btn">
-			<button class="btn btn-default" type="submit">Procurar</button>
-		</span>
+<div class="catalogo">
+	<div class="page-header">
+	  <h2>Catálogo</h2>
 	</div>
-</form>
-<br>
-<ol class="breadcrumb">
-	<?php
-	if(empty($catId)){
-		echo '<li class="active">Todas</li>';
-	} else {
-		echo '<li><a href="',site_url(),'">Todas</a></li>';
-	}
 	
-	foreach($categorias as $rows){
-		if($catId == $rows->idCategoria){
-			echo '<li class="active">',$rows->nome,'</li>';
-		} else {
-			echo '<li><a href="',site_url('?c=' .$rows->idCategoria),'">',$rows->nome,'</a></li>';
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Procurar Produto</h3>
+		</div>
+		<div class="panel-body">
+   			<form role="form" method="get" action="<?=site_url('catalogo'); ?>">
+				<input type="hidden" name="c" value="<?=$catId; ?>">
+				<div class="input-group">
+					<input type="text" class="form-control" name="q" value="<?=$search; ?>">
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="submit">Procurar</button>
+					</span>
+				</div>
+			</form>
+			<br>
+			Categorias: <?=$categorias; ?>
+
+		</div>
+	</div>
+	
+	<?php 
+	if(sizeof($produtos) > 0){
+		echo '<div class="row lista">';
+		foreach($produtos as $rows){
+	?>
+		<div class="col-sm-6 col-md-3">
+			<div class="thumbnail">
+				<div class="label label-<?=$rows->label; ?>"><?=$rows->categoria; ?></div>
+				<img src="<?=base_url('assets/img/produtos/' . $rows->arquivo); ?>" alt="...">
+				<div class="caption">
+					<h5><?=$rows->nome; ?> <small>R$ <?=number_format($rows->preco, 2, ',', ' '); ?></small></h5>
+				</div>
+			</div>
+		</div>
+	<?php
 		}
+		echo '</div>';
+	} else {
+		echo '
+			<div class="callout callout-warning">
+			    <h4>Nenhum produto encontrado</h4>
+			    <p>Verifique se as palavras estão escritas corretamente ou reescreva sua busca usando termos mais genéricos.</p>
+			</div>
+		';
 	}
 	?>
-</ol>
-
-<table class="table table-striped table-bordered">
-	<thead>
-		<tr>
-			<td>Nome</td>
-			<td>Categoria</td>
-			<td>Preço Unitário</td>
-		</tr>
-	</thead>
-	<tbody>
-		<?php foreach($produtos as $rows){ ?>
-			<tr>
-				<td><?=$rows->nome; ?></td>
-				<td><?=$rows->categoria; ?></td>
-				<td>R$ <?=number_format($rows->preco, 2, ',', ' '); ?></td>
-			</tr>
-		<?php } ?>
-	</tbody>
-</table>
+</div>

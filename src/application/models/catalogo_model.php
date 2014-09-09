@@ -8,7 +8,7 @@ class Catalogo_model extends CI_Model {
 
 	function getCatalogoProdutos($categoria = false, $search = false){
 		
-		$produtos = $this->db->select('produtos.idProduto, produtos.nome, produtos.preco, categorias.nome as categoria')
+		$produtos = $this->db->select('produtos.idProduto, produtos.nome, produtos.preco, produtos.arquivo, categorias.nome as categoria, categorias.label')
 			->from('produtos')
 			->join('categorias', 'categorias.idCategoria = produtos.categoria', 'inner')
 			->where('status', 1)

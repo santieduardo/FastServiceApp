@@ -40,8 +40,7 @@ $title = isset($title) ? $title . ' - Fast Service App' : 'Fast Service App';
     	</div>
 		<div class="collapse navbar-collapse" id="navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li class=""><a href="#">Link</a></li>
-				<li class=""><a href="#">Link</a></li>
+				<li class="<?=$url == 'catalogo' ? 'active' : ''; ?>"><a href="<?=site_url('catalogo'); ?>">Catálogo</a></li>
 			</ul>
 		</div>
     </div>
