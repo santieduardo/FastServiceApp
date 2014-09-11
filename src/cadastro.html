@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Cadastro de Usuários</title>
+		<meta charset="UTF-8"/>
+	</head>
+	<body>
+
+		<h1>Cadastro de Usuários</h1>
+
+		<form action="cadastro.php" name="cadastro" method="post">
+
+			<ul>
+				<li>
+					<label for="nome">Nome:</label>
+					<input type="text" name="nome" id="nome"/>
+				</li>
+				<li>
+					<label for="sobrenome">Sobrenome:</label>
+					<input type="text" name="sobrenome" id="sobrenome"/>
+				</li>
+				<li>
+					<label for="email">E-mail:</label>
+					<input type="text" name="email" id="email"/>
+				</li>
+				<li>
+					<label for="senha">Senha:</label>
+					<input type="password" name="senha" id="senha"/>
+				</li>
+				<li>
+					<label for="confirmasenha">Confirmar Senha:</label>
+					<input type="password" name="confirmasenha" id="confirmasenha"/>
+				</li>
+			</ul>
+
+			<input type="submit" name="enviar" id="enviar" value="Enviar" />
+
+		</form>
+
+		<a href="login.html">Login</a>
+
+	</body>
+	</html>
