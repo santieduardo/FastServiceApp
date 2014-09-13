@@ -1,8 +1,13 @@
 <div class="row conta">
 	<div class="col-md-4"></div>
 	<div class="col-md-4">
-		<div class="alert alert-danger" role="alert"></div>
-		<form role="form" action="" method="post">
+		<?php
+			if($erro){
+				echo'<div class="alert alert-danger" role="alert">', $erro, '</div>';
+			} 
+		?>
+		
+		<form role="form" action="<?=site_url('conta/login'); ?>" method="post">
 			<div class="form-group">
 				<label for="label-email">E-mail</label>
 				<input type="email" class="form-control" name="email" id="label-email" placeholder="Insira seu e-mail">
