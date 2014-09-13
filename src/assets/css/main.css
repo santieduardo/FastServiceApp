@@ -18,3 +18,6 @@
 .catalogo .lista .thumbnail { position: relative; }
 .catalogo .lista .label { position: absolute; top: 4px; right: 4px; }
 .catalogo .lista img { border-radius: .25em; }
+
+/* Conta */
+.conta .link-secundario {line-height: 34px;}
