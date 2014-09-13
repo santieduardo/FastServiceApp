@@ -12,6 +12,11 @@
 .callout-info h4 { color: #5bc0de; }
 
 
+/* Header */
+.navbar-profile {}
+.navbar-profile .item { position: relative; padding-right: 55px; }
+.navbar-profile .item .img-thumbnail { position: absolute; right: 15px; top: 50%; width: 32px; height: 32px; margin-top: -16px; }
+
 /* Catalogo */
 .catalogo {}
 

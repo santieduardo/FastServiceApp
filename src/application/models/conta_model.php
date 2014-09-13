@@ -8,7 +8,7 @@ class Conta_model extends CI_Model {
 
 	function getUsuarioByLogin($email, $senha){
 		
-          return $this->db->select("id, email , nome")	
+          return $this->db->select("idUsuario, email , nome")	
 			->from('usuarios')
             ->where('email', $email)
             ->where('senha', $senha)

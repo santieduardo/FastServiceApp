@@ -42,6 +42,28 @@ $title = isset($title) ? $title . ' - Fast Service App' : 'Fast Service App';
 			<ul class="nav navbar-nav">
 				<li class="<?=$url == 'catalogo' ? 'active' : ''; ?>"><a href="<?=site_url('catalogo'); ?>">Catálogo</a></li>
 			</ul>
+			
+			<ul class="nav navbar-nav navbar-right">
+				<li class="navbar-profile">
+					<?php
+					if(isLogged()){
+						echo '
+							<a class="item">
+								', getUserNome() ,'
+								<img src="', avatar_url() ,'"class="img-thumbnail" width="32" height="32">
+							</a>
+						';
+					} else {
+						echo '
+							<a class="item" href="', site_url('conta/login'), '">
+								Acessar
+								<img src="', avatar_url(false) ,'"class="img-thumbnail" width="32" height="32">
+							</a>
+						';
+					}
+					?>
+				</li>
+			</ul>
 		</div>
     </div>
 </nav>

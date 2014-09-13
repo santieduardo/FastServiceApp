@@ -44,14 +44,14 @@ class Conta extends CI_Controller {
 		$this->load->helper('email');
 				
 		if(!valid_email($email))
-			throw new Exception("E-mail inv·lido");
+			throw new Exception("E-mail inv√°lido");
 		
 		if(!preg_match(PASSWORD_FORMAT, $senha))
-			throw new Exception("Senha com formato inv·lido");
+			throw new Exception("Senha com formato inv√°lido");
 		
 		$usuario = $this->model->getUsuarioByLogin($email, $senha);
 		if(!$usuario)
-			throw new Exception("Usu„rio nao encontrado");
+			throw new Exception("Usu√°rio n√£o encontrado");
 				
 		$_SESSION['usuario'] = (array) $usuario;
 		
