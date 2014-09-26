@@ -53,7 +53,7 @@ class Conta extends CI_Controller {
 		if(!$usuario)
 			throw new Exception("Usuário não encontrado");
 				
-		$_SESSION['usuario'] = (array) $usuario;
+		$this->session->set_userdata('usuario', $usuario);
 		
 		redirect("");
 

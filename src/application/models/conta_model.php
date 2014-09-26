@@ -11,7 +11,7 @@ class Conta_model extends CI_Model {
           return $this->db->select("idUsuario, email , nome")	
 			->from('usuarios')
             ->where('email', $email)
-            ->where('senha', $senha)
+            ->where('senha', sha1($senha))
 		    ->get()->row();
           
          

@@ -1,4 +1,10 @@
 <?php
+
+function getUser(){
+	$CI =& get_instance();
+	return $CI->session->userdata('usuario');
+}
+
 function avatar_url($email = 'self', $size = 32){
 	
 	if($email == 'self')
@@ -11,34 +17,30 @@ function avatar_url($email = 'self', $size = 32){
 }
 
 function isLogged(){
-	if(isset($_SESSION['usuario'])){
-		return true;
-	}
-
-	return false;
+	return getUser() ? true : false;
 }
 
 function getUserEmail(){
-	if(isset($_SESSION['usuario'])){
-		return $_SESSION['usuario']['email'];
-	}
-	
+	$user = getUser();
+	if($user)
+		return $user->email;
+
 	return false;
 }
 
 function getUserNome(){
-	if(isset($_SESSION['usuario'])){
-		return $_SESSION['usuario']['nome'];
-	}
-	
+	$user = getUser();
+	if($user)
+		return $user->nome;
+
 	return false;
 }
 
 function getUserId(){
-	if(isset($_SESSION['usuario'])){
-		return $_SESSION['usuario']['id'];
-	}
-	
+	$user = getUser();
+	if($user)
+		return $user->idUsuario;
+
 	return false;
 }
 
