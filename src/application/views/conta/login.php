@@ -4,7 +4,10 @@
 		<?php
 			if($erro){
 				echo'<div class="alert alert-danger" role="alert">', $erro, '</div>';
-			} 
+			}
+			if($sucesso){
+				echo'<div class="alert alert-success" role="alert">', $sucesso, '</div>';
+			}
 		?>
 		
 		<form role="form" action="<?=site_url('conta/login'); ?>" method="post">

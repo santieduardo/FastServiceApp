@@ -1,7 +1,11 @@
 <div class="row conta">
 	<div class="col-md-4"></div>
 	<div class="col-md-4">
-		<div class="alert alert-danger" role="alert"></div>
+	<?php 
+		if($erro){
+			echo'<div class="alert alert-danger" role="alert">', $erro, '</div>';
+		}
+	?>
 		<form role="form" action="" method="post">
 			<div class="form-group">
 				<label for="label-nome">Nome</label>
@@ -20,7 +24,7 @@
 				<input type="password" class="form-control" name="senha" id="label-senha" placeholder="Insira sua senha">
 			</div>
 			<div class="form-group">
-				<label for="label-confirma-senha">Senha</label>
+				<label for="label-confirma-senha">Confirmar Senha</label>
 				<input type="password" class="form-control" name="confirma-senha" id="label-confirma-senha" placeholder="Confirme a senha">
 			</div>
 			<a class="pull-left link-secundario" href="<?=site_url(); ?>">Cancelar</a>

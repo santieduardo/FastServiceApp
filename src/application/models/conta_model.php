@@ -13,8 +13,12 @@ class Conta_model extends CI_Model {
             ->where('email', $email)
             ->where('senha', sha1($senha))
 		    ->get()->row();
-          
-         
+           
+    }
+    
+    function insertUser($user){
+    	
+    	$this->db->insert('usuarios',$user);    	
     }
 }
 	
