@@ -49,5 +49,15 @@ class Catalogo_model extends CI_Model {
 			->order_by('categorias.nome', 'asc')
 			->get()->result();
 	}
+	
+	function getProdutoById($produtoId){
+		return $this->db->select('idProduto, nome, preco, arquivo')
+			->from('produtos')
+			->where(array(
+				'status' => 1,
+				'idProduto' => $produtoId
+			))
+			->get()->row();
+	}
 
 }

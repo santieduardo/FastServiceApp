@@ -4,7 +4,7 @@
 	</div>
 	
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-8">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Procurar Produto</h3>
@@ -25,17 +25,23 @@
 				</div>
 			</div>
 			
-			<div class="row">
-				<?php 
+			<div class="row" id="produtos">
+				<?php
 				if($produtosSize > 0){ ?>
 					<div class="lista">
 						<?php foreach($produtos as $rows){ ?>
 							<div class="col-sm-6 col-md-3">
-								<div class="thumbnail">
+								<div class="thumbnail" data-id="<?=$rows->idProduto; ?>">
 									<div class="label label-<?=$rows->label; ?>"><?=$rows->categoria; ?></div>
 									<img src="<?=base_url('assets/img/produtos/' . $rows->arquivo); ?>" alt="...">
-									<div class="caption">
-										<h5><?=$rows->nome; ?> <small>R$ <?=reais($rows->preco); ?></small></h5>
+									
+									<h5><?=$rows->nome; ?></h5>
+
+									<div class="options">
+										R$ <?=reais($rows->preco); ?>
+										<a class="btn btn-primary btn-xs pull-right adicionarItem">
+											<span class="glyphicon glyphicon-plus"></span>
+										</a>
 									</div>
 								</div>
 							</div>
@@ -56,8 +62,65 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3">
-			
+		<div class="col-md-4">
+			<div class="panel panel-default">
+				<div class="panel-body carrinho" id="carrinho">
+					<?php if(isset($carrinho) && !empty($carrinho)){ ?>
+						<table class="table">
+							<thead>
+								<tr>
+									<th>Produto</th>
+									<th>Qtd</th>
+									<th colspan="2">Valor Unit</th>
+								</tr>
+							</thead>
+							<tbody id="itens">
+								<?php if(sizeof($carrinho->produtos) > 0){ ?>
+									<?php foreach($carrinho->produtos as $produto){ ?>
+										<tr data-id="<?=$produto->idProduto; ?>" class="item">
+											<td><?=$produto->nome; ?></td>
+											<td>
+												<input type="number" min="1" value="<?=$produto->quantidade; ?>" required="required">
+											</td>
+											<td nowrap="nowrap">R$ <?=reais($produto->preco); ?></td>
+											<td>
+												<a class="close removerItem">
+													<span aria-hidden="true">&times;</span>
+												</a>
+											</td>
+										</tr>
+									<?php } ?>
+								<?php } else { ?>
+									<tr>
+										<td class="text-center" colspan="4"><br>Sem produtos no carrinho</td>
+									</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+						
+						<div class="well well-sm">
+							Total: <span class="pull-right" id="total">R$ <?=reais($carrinho->total); ?></span>
+						</div>
+						
+						<a class="btn btn-success btn-lg col-md-12 <?=($carrinho->total > 0) ? '' : 'disabled'; ?>" id="cart">
+							<span class="glyphicon glyphicon-shopping-cart"></span> Finalizar Carrinho
+						</a>
+					<?php } ?>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+$(function(){
+
+	var catalogo = new Catalogo();
+	catalogo.init();
+	try {
+		
+	} catch (err) {
+		console.log(err.message);
+	}
+});
+</script>

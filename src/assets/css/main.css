@@ -20,9 +20,13 @@
 /* Catalogo */
 .catalogo {}
 
-.catalogo .lista .thumbnail { position: relative; }
+.catalogo .lista .thumbnail { position: relative; min-height: 210px; padding-bottom: 30px; }
+.catalogo .lista .options { position: absolute; left: 4px; bottom: 4px; width: 100%; padding-right: 8px; }
 .catalogo .lista .label { position: absolute; top: 4px; right: 4px; }
 .catalogo .lista img { border-radius: .25em; }
+
+.catalogo .carrinho {}
+.catalogo .carrinho input { width: 40px; }
 
 /* Conta */
 .conta .link-secundario {line-height: 34px;}
