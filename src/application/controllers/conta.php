@@ -71,8 +71,7 @@ class Conta extends CI_Controller {
 			}catch (Exception $e){
 				$erro = $e->getMessage();
 			}
-		}
-		
+		}		
 		
 		$this->load->view('tpl/header');
 	
@@ -95,6 +94,10 @@ class Conta extends CI_Controller {
 		$confirmaSenha = $this->input->post('confirma-senha');
 		
 		$this->load->helper('email');
+		
+		if($this->model->checkEmail($email)){
+			throw new Exception("E-mail já cadastrado");
+		}
 		
 		if(!valid_email($email)){
 			throw new Exception("E-mail Inválido");
