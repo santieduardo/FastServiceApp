@@ -46,14 +46,14 @@ class Conta extends CI_Controller {
 		$this->load->helper('email');
 				
 		if(!valid_email($email))
-			throw new Exception("E-mail invÃ¡lido");
+			throw new Exception("E-mail inválido");
 		
 		if(!preg_match(PASSWORD_FORMAT, $senha))
-			throw new Exception("Senha com formato invÃ¡lido");
+			throw new Exception("Senha com formato inválido");
 		
 		$usuario = $this->model->getUsuarioByLogin($email, $senha);
 		if(!$usuario)
-			throw new Exception("UsuÃ¡rio nÃ£o encontrado");
+			throw new Exception("Usuário não encontrado");
 				
 		$this->session->set_userdata('usuario', $usuario);
 		
@@ -97,15 +97,15 @@ class Conta extends CI_Controller {
 		$this->load->helper('email');
 		
 		if(!valid_email($email)){
-			throw new Exception("E-mail Inválida");
+			throw new Exception("E-mail Inválido");
 		}
 		
 		if(!preg_match(PASSWORD_FORMAT, $senha)){
-			throw new Exception("Senha com formato inválido.");
+			throw new Exception("Senha com formato inválido");
 		}
 		
 		if($senha !== $confirmaSenha){
-			throw new Exception("As senhas são diferentes.");
+			throw new Exception("As senhas são diferentes");
 		}
 
 		$user = array(
