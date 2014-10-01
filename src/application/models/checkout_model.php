@@ -16,6 +16,30 @@ class Checkout_model extends CI_Model {
 			->get()->row();
 	}
 	
+	/*select produtos.nome, produtos.preco, pedidos_produtos.quantidade
+	 * from produtos, pedidos_produtos, pedidos
+	* where produtos.idproduto = pedidos_produtos.produto
+	* and pedidos_produtos.pedido = pedidos.idPedidos
+	* and pedidos.idpedidos = 6
+	*
+	*/
+	function getItensPedido($idPedido) {
+		return $this->db->select('produtos.nome, produtos.preco, pedidos_produtos.quantidade')
+		->from('pedidos')
+		->join('pedidos_produtos', 'pedidos_produtos.pedido = pedidos.idpedidos', 'inner')
+		->join('produtos', 'pedidos_produtos.produto = produtos.idproduto', 'inner')
+		->where('pedidos.idpedidos', $idPedido)
+		->order_by('produtos.nome', 'asc')
+		->get()->result();
+	}
+	
+	function getPedidoById($pedidoId){
+		return $this->db->select('idPedidos, usuario, total, ctime, status')
+		->from('pedidos')
+		->where('idPedidos', $pedidoId)
+		->get()->row();
+	}
+	
 	function insertPedido($produtos){
 		$this->db->trans_start();
 		
@@ -48,5 +72,5 @@ class Checkout_model extends CI_Model {
 			return false;
 		
 		return $pedidoId;
-	}
+	}	
 }

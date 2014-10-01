@@ -97,18 +97,38 @@ class Checkout extends CI_Controller {
 	
 	public function pedido($pedidoId){
 		if(!is_numeric($pedidoId)) show_404();
+		$this->load->model('checkout_model', 'checkout');
 		
 		$userId = getUserId();
-		if($userId){
-			$this->load->model('checkout_model', 'checkout');
-			
-			/* Code */
+		$pedido = $this->checkout->getPedidoById($pedidoId);
+		
+		if($userId && $pedido){
+			$produtos = $this->checkout->getItensPedido($pedido->idPedidos);
+			$this->load->library('qrcode');
 			
 			$this->load->view('tpl/header');
-			/* View */
+			$this->load->view('finished', array(
+					'produtos' => $produtos,
+					'pedido' => $pedido
+			));
 			$this->load->view('tpl/footer');
 		} else {
 			redirect('conta/login?return=' . rawurldecode("checkout/pedido/" . $pedidoId));
+		}
+	}
+	
+	public function qr($pedidoId){
+		if(!is_numeric($pedidoId)) show_404();
+		$this->load->model('checkout_model', 'checkout');
+		
+		$userId = getUserId();
+		$pedido = $this->checkout->getPedidoById($pedidoId);
+		
+		if($userId && $pedido){
+			$this->load->library('qrcode');
+			QRcode::png($pedido->idPedidos, false, QR_ECLEVEL_L, 10);
+		} else {
+			show_404();
 		}
 	}
 	

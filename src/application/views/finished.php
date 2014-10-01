@@ -1,14 +1,14 @@
-<form method="post" action="<?=site_url('checkout'); ?>">
+
 	<div class="checkout">
 		<div class="page-header">
-		  <h2>Checkout</h2>
+		  <h2>Pedido <small>- <?=str_pad($pedido->idPedidos, 10, "0", STR_PAD_LEFT); ?></small></h2>
 		</div>
 		
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-default">
 					<div class="panel-body carrinho" id="carrinho">
-						<?php if(isset($carrinho) && !empty($carrinho)){ ?>
+						<?php if(isset($produtos) && !empty($produtos)){ ?>
 							<table class="table">
 								<thead>
 									<tr>
@@ -18,17 +18,12 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php if(sizeof($carrinho->produtos) > 0){ ?>
-										<?php foreach($carrinho->produtos as $produto){ ?>
+									<?php if(sizeof($produtos) > 0){ ?>
+										<?php foreach($produtos as $produto){ ?>
 											<tr class="item">
 												<td><?=$produto->nome; ?></td>
 												<td><?=$produto->quantidade; ?></td>
 												<td nowrap="nowrap">R$ <?=reais($produto->preco); ?></td>
-												<td>
-													<a class="close removerItem" href="<?=site_url('checkout/removeProduto?produtoId=' . $produto->idProduto); ?>">
-														<span aria-hidden="true">&times;</span>
-													</a>
-												</td>
 											</tr>
 										<?php } ?>
 									<?php } else { ?>
@@ -40,18 +35,15 @@
 							</table>
 							
 							<div class="well well-sm">
-								Total: <span class="pull-right" id="total">R$ <?=reais($carrinho->total); ?></span>
+								Total: <span class="pull-right" id="total">R$ <?=reais($pedido->total); ?></span>
 							</div>
 							
-							<input type="hidden" value="<?=time(); ?>" name="time">
-																								
-							<button type="submit" class="btn btn-success btn-lg col-md-12" <?=($carrinho->total > 0) ? '' : 'disabled="disabled"'; ?>>
-								<span class="glyphicon glyphicon-ok"></span> Finalizar
-							</button>
+							<div class="text-center">
+								<img alt="" src="<?=site_url('checkout/qr/'.$pedido->idPedidos); ?>">
+							</div>
 						<?php } ?>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-</form>
