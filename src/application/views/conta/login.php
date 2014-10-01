@@ -24,6 +24,8 @@
 				<span class="glyphicon glyphicon-ok"></span>
 				Entrar
 			</button>
+			
+			<input type="hidden" value="<?=$this->input->get_post('return'); ?>" name="return">
 		</form>
 	</div>
 	<div class="col-md-4"></div>

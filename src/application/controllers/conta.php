@@ -42,7 +42,8 @@ class Conta extends CI_Controller {
 
 		$email = $this->input->post('email');
 		$senha = $this->input->post('senha');
-				
+		$return = $this->input->post('return');
+
 		$this->load->helper('email');
 				
 		if(!valid_email($email))
@@ -57,7 +58,7 @@ class Conta extends CI_Controller {
 				
 		$this->session->set_userdata('usuario', $usuario);
 		
-		redirect("");
+		redirect($return);
 
 	}
 	
@@ -126,6 +127,4 @@ class Conta extends CI_Controller {
 		redirect("conta/login");
 		
     }
-    
-
-	}
+}
