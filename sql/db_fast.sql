@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2014-09-30 22:50:58
+Date: 2014-10-01 20:33:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -38,12 +38,12 @@ INSERT INTO `categorias` VALUES ('3', 'Bebidas', 'primary');
 -- ----------------------------
 DROP TABLE IF EXISTS `pedidos`;
 CREATE TABLE `pedidos` (
-  `idPedidos` int(30) NOT NULL AUTO_INCREMENT,
+  `idPedido` int(30) NOT NULL AUTO_INCREMENT,
   `usuario` int(15) NOT NULL,
   `total` decimal(10,2) NOT NULL,
   `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `status` tinyint(1) NOT NULL,
-  PRIMARY KEY (`idPedidos`),
+  PRIMARY KEY (`idPedido`),
   KEY `fk_pedidos_usuarios1_idx` (`usuario`),
   CONSTRAINT `fk_pedidos_usuarios1` FOREIGN KEY (`usuario`) REFERENCES `usuarios` (`idUsuario`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -65,8 +65,8 @@ CREATE TABLE `pedidos_produtos` (
   PRIMARY KEY (`produto`,`pedido`),
   KEY `fk_produtos_has_pedidos_pedidos1_idx` (`pedido`),
   KEY `fk_produtos_has_pedidos_produtos1_idx` (`produto`),
-  CONSTRAINT `fk_produtos_has_pedidos_produtos1` FOREIGN KEY (`produto`) REFERENCES `produtos` (`idProduto`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `fk_produtos_has_pedidos_pedidos1` FOREIGN KEY (`pedido`) REFERENCES `pedidos` (`idPedidos`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `fk_produtos_has_pedidos_pedidos1` FOREIGN KEY (`pedido`) REFERENCES `pedidos` (`idPedido`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_produtos_has_pedidos_produtos1` FOREIGN KEY (`produto`) REFERENCES `produtos` (`idProduto`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------

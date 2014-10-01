@@ -2,18 +2,8 @@
 
 class Conta extends CI_Controller {
 
-	public function index(){
-		
-		
-		$this->load->view('tpl/header');
-		
-		$this->load->view('home');
-
-		$this->load->view('tpl/footer');
-		
-	}
 	public function login(){
-	
+		if(isLogged()) show_404();
 		$erro = false;
 		
 		if($this->input->post()){	 
@@ -63,7 +53,7 @@ class Conta extends CI_Controller {
 	}
 	
 	public function registrar(){
-	
+		if(isLogged()) show_404();
 		$erro = false;
 		
 		if($this->input->post()){
@@ -113,11 +103,11 @@ class Conta extends CI_Controller {
 		}
 
 		$user = array(
-				'nome' => $nome ,
-				'sobrenome' => $sobrenome ,
-				'email' => $email ,
-				'senha' => sha1($senha) ,
-				'ctime' => time()
+			'nome' => $nome,
+			'sobrenome' => $sobrenome,
+			'email' => $email,
+			'senha' => sha1($senha),
+			'ctime' => time()
 		);
 		
 		$this->model->insertUser($user);
@@ -126,5 +116,11 @@ class Conta extends CI_Controller {
 		
 		redirect("conta/login");
 		
+    }
+    
+    public function logoff(){
+    	$this->session->sess_destroy();
+    	
+    	redirect('');
     }
 }

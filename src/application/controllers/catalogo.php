@@ -5,7 +5,6 @@ class Catalogo extends CI_Controller {
 	const PAGE_LIMIT = 12;
 	
 	public function index(){
-		//$this->session->sess_destroy();
 		$this->load->model('catalogo_model', 'model');
 		
 		$catId = $this->input->get('c');
@@ -24,7 +23,6 @@ class Catalogo extends CI_Controller {
 		$this->load->view('tpl/header', array(
 			'title' => 'Catálogo'
 		));
-		
 
 		$this->load->view('catalago', array(
 			'produtos' => $produtos,

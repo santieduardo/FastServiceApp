@@ -15,29 +15,22 @@ class Checkout_model extends CI_Model {
 			))
 			->get()->row();
 	}
-	
-	/*select produtos.nome, produtos.preco, pedidos_produtos.quantidade
-	 * from produtos, pedidos_produtos, pedidos
-	* where produtos.idproduto = pedidos_produtos.produto
-	* and pedidos_produtos.pedido = pedidos.idPedidos
-	* and pedidos.idpedidos = 6
-	*
-	*/
+
 	function getItensPedido($idPedido) {
 		return $this->db->select('produtos.nome, produtos.preco, pedidos_produtos.quantidade')
-		->from('pedidos')
-		->join('pedidos_produtos', 'pedidos_produtos.pedido = pedidos.idpedidos', 'inner')
-		->join('produtos', 'pedidos_produtos.produto = produtos.idproduto', 'inner')
-		->where('pedidos.idpedidos', $idPedido)
-		->order_by('produtos.nome', 'asc')
-		->get()->result();
+			->from('pedidos')
+			->join('pedidos_produtos', 'pedidos_produtos.pedido = pedidos.idPedido', 'inner')
+			->join('produtos', 'pedidos_produtos.produto = produtos.idproduto', 'inner')
+			->where('pedidos.idPedido', $idPedido)
+			->order_by('produtos.nome', 'asc')
+			->get()->result();
 	}
 	
 	function getPedidoById($pedidoId){
-		return $this->db->select('idPedidos, usuario, total, ctime, status')
-		->from('pedidos')
-		->where('idPedidos', $pedidoId)
-		->get()->row();
+		return $this->db->select('idPedido, usuario, total, ctime, status')
+			->from('pedidos')
+			->where('idPedido', $pedidoId)
+			->get()->row();
 	}
 	
 	function insertPedido($produtos){
@@ -62,7 +55,7 @@ class Checkout_model extends CI_Model {
 		
 		$this->db->insert_batch('pedidos_produtos', $inserts);
 		
-		$this->db->where('idPedidos', $pedidoId)->update('pedidos', array(
+		$this->db->where('idPedido', $pedidoId)->update('pedidos', array(
 			'total' => $total
 		));
 			

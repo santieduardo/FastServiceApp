@@ -1,7 +1,7 @@
 
 	<div class="checkout">
 		<div class="page-header">
-		  <h2>Pedido <small>- <?=str_pad($pedido->idPedidos, 10, "0", STR_PAD_LEFT); ?></small></h2>
+		  <h2>Pedido <small>- <?=str_pad($pedido->idPedido, 10, "0", STR_PAD_LEFT); ?></small></h2>
 		</div>
 		
 		<div class="row">
@@ -39,7 +39,7 @@
 							</div>
 							
 							<div class="text-center">
-								<img alt="" src="<?=site_url('checkout/qr/'.$pedido->idPedidos); ?>">
+								<img alt="" src="<?=site_url('checkout/qr/'.$pedido->idPedido); ?>">
 							</div>
 						<?php } ?>
 					</div>

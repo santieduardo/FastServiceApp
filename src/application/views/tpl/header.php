@@ -45,25 +45,25 @@ $title = isset($title) ? $title . ' - Fast Service App' : 'Fast Service App';
 			</ul>
 			
 			<ul class="nav navbar-nav navbar-right">
-				<li class="navbar-profile">
-					<?php
-					if(isLogged()){
-						echo '
-							<a class="item">
-								', getUserNome() ,'
-								<img src="', avatar_url() ,'"class="img-thumbnail" width="32" height="32">
-							</a>
-						';
-					} else {
-						echo '
-							<a class="item" href="', site_url('conta/login'), '">
-								Acessar
-								<img src="', avatar_url(false) ,'"class="img-thumbnail" width="32" height="32">
-							</a>
-						';
-					}
-					?>
-				</li>
+				<?php if(isLogged()){ ?>
+					<li>
+						<a class="item" href="<?=site_url('conta/logoff'); ?>">Sair</a>
+					</li>
+					<li class="navbar-profile">
+						<a class="item">
+							Login <img src="<?=avatar_url(); ?>" class="img-thumbnail" width="32" height="32">
+						</a>
+					</li>
+				<?php } else { ?>
+					<li>
+						<a class="item" href="<?=site_url('conta/registrar'); ?>">Criar Conta</a>
+					</li>
+					<li class="navbar-profile">
+						<a class="item" href="<?=site_url('conta/login'); ?>">
+							Login <img src="<?=avatar_url(false); ?>" class="img-thumbnail" width="32" height="32">
+						</a>
+					</li>
+				<?php } ?>
 			</ul>
 		</div>
     </div>

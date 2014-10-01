@@ -73,7 +73,6 @@ class Checkout extends CI_Controller {
 	private function doCreatePedido($carrinho){
 		if(sizeof($carrinho->produtos) > 0){
 			
-			var_dump($carrinho);
 			$idPedido = $this->checkout->insertPedido($carrinho->produtos);
 			
 			if($idPedido && $idPedido > 0){
@@ -89,12 +88,7 @@ class Checkout extends CI_Controller {
 		}
 	}
 	
-	/*
-	 * Buscar o pedido e seus produtos com valor e quantidade e mostrar na tela com o qrcode
-	 * é possivel fazer isso com duas querys.
-	 * A tela pode ser parecida com a checkout.
-	 */
-	
+
 	public function pedido($pedidoId){
 		if(!is_numeric($pedidoId)) show_404();
 		$this->load->model('checkout_model', 'checkout');
@@ -103,13 +97,12 @@ class Checkout extends CI_Controller {
 		$pedido = $this->checkout->getPedidoById($pedidoId);
 		
 		if($userId && $pedido){
-			$produtos = $this->checkout->getItensPedido($pedido->idPedidos);
-			$this->load->library('qrcode');
-			
+			$produtos = $this->checkout->getItensPedido($pedido->idPedido);
+
 			$this->load->view('tpl/header');
 			$this->load->view('finished', array(
-					'produtos' => $produtos,
-					'pedido' => $pedido
+				'produtos' => $produtos,
+				'pedido' => $pedido
 			));
 			$this->load->view('tpl/footer');
 		} else {
@@ -126,7 +119,7 @@ class Checkout extends CI_Controller {
 		
 		if($userId && $pedido){
 			$this->load->library('qrcode');
-			QRcode::png($pedido->idPedidos, false, QR_ECLEVEL_L, 10);
+			QRcode::png($pedido->idPedido, false, QR_ECLEVEL_L, 10);
 		} else {
 			show_404();
 		}
