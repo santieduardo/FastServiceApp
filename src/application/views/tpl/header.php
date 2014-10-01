@@ -51,7 +51,7 @@ $title = isset($title) ? $title . ' - Fast Service App' : 'Fast Service App';
 					</li>
 					<li class="navbar-profile">
 						<a class="item">
-							Login <img src="<?=avatar_url(); ?>" class="img-thumbnail" width="32" height="32">
+							<?=getUserNome(); ?> <img src="<?=avatar_url(); ?>" class="img-thumbnail" width="32" height="32">
 						</a>
 					</li>
 				<?php } else { ?>
