@@ -3,8 +3,8 @@
 ### Regras de negócio
 
 - RN01 - O pagamento deve ser feito apenas em dinheiro ou cartão.
-- RN02 - O cliente não pode pagar o pedido com uma nota muito superior ao valor do produto. **[estabelecer parâmetro, por exemplo: "10 vezes mais..."]**
-- RN03 - O estabelecimento deve seguir as regras da instituição. **[regras do que especificamente? no âmbito das vendas? ]**
+- RN02 - O cliente não pode pagar o pedido com uma nota superior a 20 (vinte) vezes o valor do produto.
+- RN03 - O estabelecimento deve seguir as regras em relação as vendas da instituição. Exemplo: não vender bebidas alcoólicas e tabaco.
 - RN04 - O usuário pode consultar o catálogo sem estar autenticado.
 - RN05 - O faturamento só pode ser feito na retirada do pedido. 
 - RN06 - O sistema só pode ser acessado pela rede da instituição. 
@@ -18,13 +18,14 @@
 - RF03 - O sistema deve possibilitar que o usuário busque os produtos por nome.
 - RF04 - O sistema deve possibilitar que o usuário se cadastre.
 - RF05 - O sistema deve possibilitar que o usuário se autentique.
-**[adicionar os requisitos funcionais sobre login no facebook e da área de estebelecimento]**
+- RF06 - O sistema deve possibilitar que o usuário se autentique pelo facebook.
+- RF07 - O sistema deve possuir uma área de administração exclusivamente para o administrador do estabelecimento gerenciar os produtos do catálogo.
 
 
 ### Requisitos Não Funcionais
 
 - RNF01 - As senhas devem ter entre 6 e 16 caracteres.
-**[a questão da responsividade para diversas plataformas pode ser um requisito não funcional]**
+- RNF01 - O sistema deve se adequar para todos os tipos de dispositivos que tentarem acessar a aplicação.
 
 
 ### Requisitos Tecnológicos
