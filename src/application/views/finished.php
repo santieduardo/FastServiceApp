@@ -39,7 +39,7 @@
 							</div>
 							
 							<div class="text-center">
-								<img alt="" src="<?=site_url('checkout/qr/'.$pedido->idPedido); ?>">
+								<img alt="" src="<?=site_url('checkout/qr/'.$pedido->idPedido); ?>" width="400">
 							</div>
 						<?php } ?>
 					</div>
