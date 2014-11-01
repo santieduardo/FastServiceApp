@@ -1,7 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Conta extends CI_Controller {
+use Facebook\FacebookSession;
+use Facebook\FacebookRedirectLoginHelper;
+use Facebook\FacebookRequest;
+use Facebook\GraphUser;
 
+class Conta extends CI_Controller {
+	
 	public function login(){
 		if(isLogged()) show_404();
 		$erro = false;
@@ -116,6 +121,72 @@ class Conta extends CI_Controller {
 		
 		redirect("conta/login");
 		
+    }
+    
+    private function setupFacebookApi(){
+    	FacebookSession::setDefaultApplication(
+    		$this->config->item('facebook_appid'),
+    		$this->config->item('facebook_secret')
+		);
+    }
+    
+    
+    public function facebook(){
+    	$this->setupFacebookApi();
+    
+    	$callback = site_url('conta/loginFacebook');
+    	$helper = new FacebookRedirectLoginHelper($callback);
+    	redirect($helper->getLoginUrl(array('scope' => 'email')));
+    }
+    
+    private function loginFacebook(){
+    	$this->setupFacebookApi();
+    
+    	$callback = site_url('conta/loginFacebook');
+    	$session = null;
+    
+    	$helper = new FacebookRedirectLoginHelper($callback);
+    	try {
+    		$session = $helper->getSessionFromRedirect();
+    		if($session){
+    			$request = new FacebookRequest($session, 'GET', '/me?fields=email,id,first_name,last_name');
+    			$response = $request->execute();
+    			$data = $response->getGraphObject(GraphUser::className());
+    			
+    			$user = array(
+    				'nome' => $data->getFirstName(),
+    				'sobrenome' => $data->getLastName(),
+    				'email' => $data->getProperty("email"),
+    				'ctime' => time()
+    			);
+    			
+    			$connection = array(
+    				'id' => $data->getId(),
+    				'token' => $session->getToken()
+    			);
+    
+    			$this->tryLoginFacebook($user, $connection);
+    
+    		}
+    	} catch(FacebookRequestException $ex) {
+    		echo $ex->getMessage();
+    	} catch(Exception $ex) {
+    		echo $ex->getMessage();
+    	}
+    }
+    
+    private function tryLoginFacebook($data, $connection){
+    	$this->load->model('conta_model', 'model');
+    	
+    	$this->model->
+    	
+    	/*
+    	 * 
+    	 */
+    	
+    	
+    	
+    	
     }
     
     public function logoff(){
