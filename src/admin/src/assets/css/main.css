@@ -1,0 +1,53 @@
+body { padding: 50px 0 0 0; }
+
+.main { padding: 20px; }
+.main .page-header { margin-top: 0; }
+.sidebar { display: none; }
+.sidebar .thumbnail { text-decoration: none; padding: 20px 4px; }
+.sidebar .thumbnail span { font-size: 32px; }
+.dashboard { background: url('../img/logo.jpg') no-repeat 50% 50%; position: fixed; right: 0; bottom: 0; left: 0; top: 50px; z-index: 1; display: block; }
+.form-group input.error, .form-group select.error { border-color: #a94442; }
+.form-group label.error { text-align: right; color: #a94442; position: absolute; right: 15px; font-size: 10px; font-weight: 400; }
+
+.pagination { margin: 0; }
+textarea { resize: none; }
+
+
+/* callout */
+.callout { padding: 20px; margin: 20px 0; border: 1px solid #eee; border-left-width: 5px; border-radius: 3px; }
+.callout h4 { margin-top: 0; margin-bottom: 5px; }
+.callout .btn { float: right; margin-left: 15px; }
+
+.callout-warning { border-left-color: #f0ad4e; }
+.callout-warning h4 { color: #f0ad4e; }
+
+.callout-danger { border-left-color: #d9534f; }
+.callout-danger h4 { color: #d9534f; }
+
+.callout-info { border-left-color: #5bc0de; }
+.callout-info h4 { color: #5bc0de; }
+
+@media (min-width: 768px) {
+	.sidebar { position: fixed; top: 51px; bottom: 0; left: 0; z-index: 1000; display: block; padding: 20px 20px 0 20px; overflow-x: hidden; overflow-y: auto; background-color: #f5f5f5; border-right: 1px solid #eee; }
+	.main { padding-right: 40px; padding-left: 40px; }
+	.dashboard { left: 16.66666667%; top: 50px; }
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover,
+.navbar-default .navbar-nav>.open>a:focus { background-color: #FF681D; color: #fff; }
+
+.navbar-default .navbar-nav .open .dropdown-menu>li>a { color: #fff; }
+
+.navbar { background-color: #ff882c; border-color: #F14C1C; }
+.navbar .navbar-text, .navbar .navbar-nav >li > a { color: #fff; }
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus  { background-color: #FF681D; color: #fff; }
+
+.navbar-default .navbar-brand { color: #fff; }
+.navbar-default .navbar-toggle { border-color: #fff; }
+.navbar-default .navbar-collapse, .navbar-default .navbar-form { border-color: #FF681D; }
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:active, .navbar-default .navbar-toggle:focus { background-color: #FF681D; }
+.navbar-default .navbar-toggle .icon-bar { background-color: #fff; }
+a { color: #052f83; text-decoration: none; }
+
+.sidebar .thumbnail:hover { border-color: #052f83; }
