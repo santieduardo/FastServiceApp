@@ -178,7 +178,6 @@ class Conta extends CI_Controller {
     private function tryLoginFacebook($data, $connection){
     	$this->load->model('conta_model', 'model');
     	
-    	$this->model->
     	
     	/*
     	 * 
