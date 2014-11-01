@@ -1,3 +1,5 @@
+a { color: #052f83; text-decoration: none; }
+
 /* callout */
 .callout { padding: 20px; margin: 20px 0; border: 1px solid #eee; border-left-width: 5px; border-radius: 3px; }
 .callout h4 { margin-top: 0; margin-bottom: 5px; }
@@ -13,6 +15,19 @@
 
 
 /* Header */
+.navbar { background-color: #ff882c; border-color: #F14C1C; }
+.navbar .navbar-text, .navbar .navbar-nav >li > a { color: #fff; }
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover,
+.navbar-default .navbar-nav>.active>a:focus  { background-color: #FF681D; color: #fff; }
+
+.navbar-default .navbar-brand { color: #fff; }
+.navbar-default .navbar-toggle { border-color: #fff; }
+.navbar-default .navbar-collapse, .navbar-default .navbar-form { border-color: #FF681D; }
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:active, .navbar-default .navbar-toggle:focus { background-color: #FF681D; }
+.navbar-default .navbar-toggle .icon-bar { background-color: #fff; }
+
+
+
 .navbar-profile {}
 .navbar-profile .item { position: relative; padding-right: 55px; }
 .navbar-profile .item .img-thumbnail { position: absolute; right: 15px; top: 50%; width: 32px; height: 32px; margin-top: -16px; }
