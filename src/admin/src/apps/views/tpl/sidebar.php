@@ -10,7 +10,7 @@
 
 <div class="row">
 	<div class="col-md-12 text-center">
-		<a href="<?=site_url(''); ?>" class="thumbnail">
+		<a href="<?=site_url('pedidos/lista'); ?>" class="thumbnail">
 			<span class="glyphicon glyphicon-refresh"></span>
 			<br>
 			Consultar Pedido

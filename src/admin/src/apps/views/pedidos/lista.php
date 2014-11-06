@@ -17,7 +17,7 @@
 
 <link rel="stylesheet" type="text/css" href="C:/xampp/htdocs/FastServiceApp/src/admin/src/assets/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="C:/xampp/htdocs/FastServiceApp/src/admin/src/assets/css/main.css">
-
+ 
 <script type="text/javascript" src="http://localhost/FastServiceApp/src/admin/src/assets/js/jquery-1.11.1.js"></script>
 <script type="text/javascript" src="http://localhost/FastServiceApp/src/admin/src/assets/js/bootstrap.js"></script>
 <script type="text/javascript" src="http://localhost/FastServiceApp/src/admin/src/assets/js/plugins/maskedinput.js"></script>
