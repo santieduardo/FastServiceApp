@@ -8,12 +8,11 @@ class Pedidos_model extends CI_Model {
 	
 	private function pedidosTerm(&$query, $term){
 		if(is_numeric($term)){
-			$query->like('pedido.id_pedido', $term);
+			$query->like('pedidos.idPedido', $term);
 		}
+		
 		$query->or_like(array(
-			'pedido.nro' => $term,
-			'clientes.nome' => $term,
-			'fornecedores.nome' => $term
+			'usuarios.nome' => $term
 		));
 	}
 	
@@ -21,81 +20,32 @@ class Pedidos_model extends CI_Model {
 		switch($ordem){
 			case 1 : $query->order_by('cliente', 'asc'); break;
 			case 2 : $query->order_by('cliente', 'desc'); break;
-			
-			case 3 : $query->order_by('fornecedor', 'asc'); break;
-			case 4 : $query->order_by('fornecedor', 'desc'); break;
-			
-			case 5 : $query->order_by('embarque_certo', 'asc'); break;
-			case 6 : $query->order_by('embarque_certo', 'desc'); break;
-			
-			case 7 : $query->order_by('pedido.venc1', 'asc'); break;
-			case 8 : $query->order_by('pedido.venc1', 'desc'); break;
-			
-			default: $query->order_by('pedido.id_pedido', 'desc');
+
+			default: $query->order_by('pedidos.idPedido', 'desc');
 		}
 	}
 	
 	function getPedidosSize($term){
-		$query = $this->db->select('id_pedido')
-			->from('pedido')
-			->join('clientes', 'pedido.id_cliente = clientes.id_cliente', 'left outer')
-			->join('clientes as fornecedores', 'pedido.id_fornecedor = fornecedores.id_cliente', 'left outer')
-			->group_by('pedido.id_pedido');
+		$query = $this->db->select('pedidos.idPedido')
+			->from('pedidos')
+			->join('usuarios', 'pedidos.usuario = usuarios.idUsuario', 'inner')
+			->group_by('pedidos.idPedido');
 			
 		$this->pedidosTerm($query, $term);
 		return $query->get()->num_rows();
 	}
 	
 	function getPedidos($page, $term, $ordem){
-		$query = $this->db->select('pedido.id_pedido, pedido.nro, clientes.nome as cliente, fornecedores.nome as fornecedor, pedido.data, pedido.status, pedido.venc1, pedido.venc2, pedido.venc3')
-			
-			/* coluna embarque esta como texto e por isso tem que ser convertida para poder ordenar corretamente */
-			->select("date_format(str_to_date(pedido.embarque, '%d/%m/%Y'), '%Y-%m-%d') as embarque_certo", false)
-			
-			->from('pedido')
-			->join('clientes', 'pedido.id_cliente = clientes.id_cliente', 'left outer')
-			->join('clientes as fornecedores', 'pedido.id_fornecedor = fornecedores.id_cliente', 'left outer')
-			->group_by('pedido.id_pedido')
+		$query = $this->db->select('pedidos.idPedido, usuarios.nome as cliente, pedidos.total, pedidos.ctime, sum(pedidos_produtos.quantidade) as quantidade')
+			->from('pedidos')
+			->join('usuarios', 'pedidos.usuario = usuarios.idUsuario', 'inner')
+			->join('pedidos_produtos', 'pedidos.idPedido = pedidos_produtos.pedido', 'left outer')
+			->group_by('pedidos.idPedido')
 			->limit(PAGE_LIMIT, $page);
 		
 		$this->pedidosOrdem($query, $ordem);
 		$this->pedidosTerm($query, $term);
-		$result = $query->get()->result();
-		
-		$pedidos = array();
-		
-		foreach($result as $row){
-			$nota = $this->db->select('id_nota')
-				->from('nota')
-				->where('id_pedido', $row->id_pedido)
-				->get()->row();
-			
-			$total = $this->db->select('sum(val_u_total) as total')
-				->from('prod_pedido')
-				->group_by('id_prod_pedido')
-				->where('id_pedido', $row->id_pedido)
-				->get()->row();
-
-			$vencimento = null;
-			if($row->venc1 <> 0) $vencimento = $row->venc1;
-			if($row->venc2 <> 0) $vencimento = $row->venc2;
-			if($row->venc3 <> 0) $vencimento = $row->venc3;
-
-			array_push($pedidos, (Object) array(
-				'id_pedido' => $row->id_pedido,
-				'nro' => $row->nro,
-				'cliente' => $row->cliente,
-				'fornecedor' => $row->fornecedor,
-				'data' => $row->data,
-				'status' => $row->status,
-				'embarque' => ($row->embarque_certo <> 0 ? $row->embarque_certo : null),
-				'vencimento' => $vencimento,
-				'nota' => ($nota ? $nota->id_nota : null),
-				'total' => ($total ? $total->total : 0.0)
-			));
-		}
-		
-		return $pedidos;
+		return $query->get()->result();
 	}
 	
 	function insertPedido($data){

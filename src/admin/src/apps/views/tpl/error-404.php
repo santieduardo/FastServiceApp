@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 
-	<title>Sulbeef - Representações</title>
+	<title>Fast Service App</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="imagetoolbar" content="no">
@@ -32,7 +32,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	<div class="container">
 		<div class="navbar-header">
-			<div class="navbar-brand">Sulbeef - Representações</div>
+			<div class="navbar-brand">Fast Service App</div>
 		</div>
 	</div>
 </div>

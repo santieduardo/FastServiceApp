@@ -47,12 +47,12 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedido <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
-						<li><a href="<a href="<?=site_url('descontos'); ?>">Fazer Pedido</a></li>
-						<li><a href="<a href="<?=site_url('descontos'); ?>">Consultar Pedido</a></li>
+						<li><a href="<a href="<?=site_url('pedidos/novo'); ?>">Fazer Pedido</a></li>
+						<li><a href="<a href="<?=site_url('pedidos/lista'); ?>">Consultar Pedido</a></li>
 						
 					</ul>
 				</li>		
-				<li><a href="<?=site_url('logoff'); ?>">Sair</a></li>	
+				<li><a href="<?=site_url('logoff'); ?>">Sair</a></li>
 			</ul>
 			<p class="navbar-text navbar-right hidden-xs hidden-sm">Logado como <?=ucfirst($this->user->getUsername()); ?></p>
 		</div>

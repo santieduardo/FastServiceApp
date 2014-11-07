@@ -1,167 +1,87 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
- 
-	<title>Novo Pedido</title>
-
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta http-equiv="imagetoolbar" content="no">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-<link rel="apple-touch-icon-precomposed" href="http://localhost/FastServiceApp/src/admin/src/favicon.png">
-<link rel="icon" href="http://localhost/FastServiceApp/src/admin/src/favicon.ico">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="google" content="notranslate">
-<meta name="robots" content="noindex, nofollow">
-
-<link rel="stylesheet" type="text/css" href="C:/xampp/htdocs/FastServiceApp/src/admin/src/assets/css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="C:/xampp/htdocs/FastServiceApp/src/admin/src/assets/css/main.css">
-
-<script type="text/javascript" src="http://localhost/FastServiceApp/src/admin/src/assets/js/jquery-1.11.1.js"></script>
-<script type="text/javascript" src="http://localhost/FastServiceApp/src/admin/src/assets/js/bootstrap.js"></script>
-<script type="text/javascript" src="http://localhost/FastServiceApp/src/admin/src/assets/js/plugins/maskedinput.js"></script>
-<script type="text/javascript" src="http://localhost/FastServiceApp/src/admin/src/assets/js/plugins/validate.js"></script>
-<script type="text/javascript" src="http://localhost/FastServiceApp/src/admin/src/assets/js/main.js"></script>
-
-<!--[if lt IE 9]>
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
-
-</head>
-<body>
-<nav class="navbar navbar-default navbar navbar-fixed-top hidden-print" role="navigation">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-		</div>
-		<div class="collapse navbar-collapse">
-			<ul class="nav navbar-nav">
-				<!-- Novo -->
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedido <span class="caret"></span></a>
-					<ul class="dropdown-menu" role="menu">
-						<li><a href="<a href="http://localhost/FastServiceApp/src/admin/src/index.php/descontos">Fazer Pedido</a></li>
-						<li><a href="<a href="http://localhost/FastServiceApp/src/admin/src/index.php/descontos">Consultar Pedido</a></li>
-						
-					</ul>
-				</li>		
-				<li><a href="http://localhost/FastServiceApp/src/admin/src/index.php/logoff">Sair</a></li>	
-			</ul>
-			<p class="navbar-text navbar-right hidden-xs hidden-sm">Logado como Eduardo Santi</p>
-		</div>
-	</div>
-</nav>
-<div class="container-fluid">
+<h4 class="page-header">Novo Pedido</h4>
+<div class="col-md-6">
+	<h4 style="text-align: center">Produtos</h4>
+	<br>
 	<div class="row">
-	<div class="col-md-3">
-		<div class="col-sm-3 col-md-2 sidebar hidden-print">
-			<div class="row">
-	<div class="col-md-12 text-center">
-		<a href="<?=site_url('views/pedidos/novo'); ?>" class="thumbnail">
-			<span class="glyphicon glyphicon-plus-sign"></span>
-			<br>
-			Fazer Pedido
-		</a>
+		<form role="form" method="get" action="<?=site_url('pedidos'); ?>">
+			<div class="input-group">
+				<input type="text" class="form-control" name="term" value="<?=$this->input->get('term'); ?>" placeholder="Procurar...">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit">
+						<span class="glyphicon glyphicon-search"></span>
+					</button>
+				</span>
+			</div>
+		</form>
 	</div>
-</div>	
-
-<div class="row">
-	<div class="col-md-12 text-center">
-		<a href="<?=site_url('views/pedidos/lista'); ?>" class="thumbnail">
-			<span class="glyphicon glyphicon-refresh"></span>
-			<br>
-			Consultar Pedido
-		</a>
+	<br>
+	<div class="row">
+	    <table class="table table-striped table-bordered">    
+	       <thead>       
+		      <tr>
+			     <th>Produto</th>
+			     <th colspan="2">Valor Unitário</th>
+		      </tr>
+		  	</thead>		  		
+		    <tbody>				
+				<?php for($i = 0; $i < 10; $i++){ ?>	  
+				<tr>			
+					<td>Produto 2</td>
+					<td>R$ 2,50</td>
+					<td class="text-right" width="200">
+						<form action="" method="post">
+							<input type="hidden" value="1" name="produtoId">
+							<div class="col-md-8">
+								<input type="number" value="1" name="qtd" min="0" class="form-control">
+							</div>
+							<button type="submit" class="btn btn-default col-md-4">
+								<span class="glyphicon glyphicon-arrow-right"></span>
+							</button>
+						</form>
+					</td>					
+			  </tr>
+			<?php } ?>
+		</tbody>
+	  </table>	
 	</div>
-</div>	
-
-
-<div class="row">
-	<div class="col-md-12 text-center">
-		<a href="<?=site_url('logoff'); ?>" class="thumbnail">
-			<span class="glyphicon glyphicon-log-out"></span>
-			<br>
-			Sair
-		</a>
-	</div>
-</div>	
-		</div>
 	
-			
-<div class="dashboard">
-<div class="col-md-9">
- <h1 style="text-align: center">Novo Pedido
- </h1>
- 
-  <div class="table-responsive">
-      <table class="table">
-       <thead>
-       
-	      <tr>
-		     <th>
-               <form role="form">
-                <div class="form-group">
-                 <input type="search" class="form-control" placeholder="Digite o nome do produto">
-                </div>
-               </form>
-             </th>
-       
-         
-            <th>
-              <a href="#" class="btn btn-info btn-lg">
-                <span class="glyphicon glyphicon-search"> </span>
-              </a>
-           </th>
-         </tr>  
-       </thead>
-      </table>
-      
-     <table class="table">
-     
-       <thead>
-       
-	      <tr>
-		     <th> Produto </th>
-		     <th>Valor</th>				
-	      </tr>
-	  	</thead>	
-	  		
-	    <tbody>				
-		  <tr>			
-			 <th> Produto 1 </th>
-			 <th> 05,30</th>			 
-			 <th> <a href="#" class="btn btn-info btn-lg">
-                   <span class="glyphicon glyphicon-ok"> </span>
-                  </a>
-             </th>					
-		  </tr>		  
-		   <tr>			
-			 <th> Produto 2 </th>
-			 <th> 02,50</th>			 
-			 <th> <a href="#" class="btn btn-info btn-lg">
-                   <span class="glyphicon glyphicon-ok"> </span>
-                  </a>
-             </th>					
-		  </tr>
-	</tbody>
-  </table>	
-  <h1>
-  
-<button type="reset" class="btn btn-default">Cancelar</button>
+	<div class="row hidden-print">
+		<div class="col-md-12">
+			<?=$pagination; ?>
+		</div>
+	</div>
+</div>
 
+<div class="col-md-1"></div>
 
-<button type="submit" class="btn btn-info btn-lg">Concluir</button>
-</div>							
-</h1>
-
-
-
-   
- </body>
-</html>
+<div class="col-md-5"> <!--  REVER MD -->
+	<h4 style="text-align: center">Pedido</h4>
+	<br>
+	<div class="row">
+	    <table class="table table-striped table-bordered">    
+	       <thead>       
+		      <tr>
+			     <th>Produto</th>
+			     <th>Valor</th>
+			     <th></th>
+		      </tr>
+		  	</thead>		  		
+		    <tbody>				
+				<?php for($i = 0; $i < 10; $i++){ ?>	  
+				<tr>			
+					<td>Produto 2</td>
+					<td>02,50</td>			 
+					<td class="text-right">
+						<form action="">
+							<input type="number" value="1" name="qtd" min="0">
+							<button type="submit" class="btn btn-default">
+								<span class="glyphicon glyphicon-arrow-right"></span>
+							</button>
+						</form>
+					</td>					
+			  </tr>
+			<?php } ?>
+		</tbody>
+	  </table>	
+	</div>
+</div>

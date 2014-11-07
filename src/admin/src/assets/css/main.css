@@ -63,12 +63,8 @@ a { color: #052f83; text-decoration: none; }
 
 .glyphicon-zoom-in { content:"\e015"; }
 
-.btn-info:hover, .btn-info:focus, .btn-info:active, 
-.btn-info.active, .open>.dropdown-toggle.btn-info { color: #fff; background-color: #FF681D; border-color: #FF681D; }
-.btn-info { color: #fff; background-color: #ff882c; border-color: #ff882c; }
+.btn-default:hover, .btn-default:focus, .btn-default:active, 
+.btn-default.active, .open>.dropdown-toggle.btn-default { color: #fff; background-color: #FF681D; border-color: #FF681D; }
+.btn-default { color: #fff; background-color: #ff882c; border-color: #ff882c; }
 
 .form-control { width: 100%; font-size: 15px; color: #000000; }
-
-.btn-default:hover, .btn-default:focus, .btn-default:active,
-.btn-default.active, .open>.dropdown-toggle.btn-default { color: #fff; background-color: #ff882c; border-color: #ff882c; }
-.btn-default { color: #fff; background-color: #ff9a2c; border-color: #ff9a2c; }

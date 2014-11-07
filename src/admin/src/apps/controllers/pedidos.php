@@ -7,6 +7,7 @@ class Pedidos extends CI_Controller {
 		$this->user->check();
 		$this->load->helper('pedidos');
 		$this->load->model('pedidos_model', 'pedidos');
+		$this->load->model('produtos_model', 'produtos');
 		
 	}
 
@@ -38,7 +39,12 @@ class Pedidos extends CI_Controller {
 	}
 	
 	public function novo(){
-		die();
+		
+		$term = $this->input->get('term');
+		$page = $this->input->get('per_page');
+		if(!is_numeric($page)) $page = 0;
+		
+		
 		if($this->input->post()){
 			try {		
 				$this->novoPost();
