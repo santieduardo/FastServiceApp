@@ -7,9 +7,20 @@ function getUser(){
 
 function avatar_url($email = 'self', $size = 32){
 	
-	if($email == 'self')
+	if($email == 'self'){
+		
+		$CI =& get_instance();
+		$conexaoId = $CI->db->select('conexoes.id')
+			->from('conexoes')
+			->join('usuarios', 'conexoes.usuario = usuarios.idUsuario', 'inner')
+			->get()->row();
+		
+		if($conexaoId)
+			return "http://graph.facebook.com/{$conexaoId->id}/picture";
+		
 		$email = getUserEmail();
-	
+	}
+		
 	if(empty($email))
 		return base_url('assets/img/default-profile.jpg');
 

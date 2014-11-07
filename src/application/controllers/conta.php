@@ -48,12 +48,7 @@ class Conta extends CI_Controller {
 			throw new Exception("Senha com formato inválido");
 		
 		$usuario = $this->model->getUsuarioByLogin($email, $senha);
-		if(!$usuario)
-			throw new Exception("Usuário não encontrado");
-				
-		$this->session->set_userdata('usuario', $usuario);
-		
-		redirect($return);
+		$this->startSession($usuario, $return);
 
 	}
 	
@@ -122,27 +117,28 @@ class Conta extends CI_Controller {
 		redirect("conta/login");
 		
     }
-    
+
     private function setupFacebookApi(){
+    	if(isLogged()) show_404();
+    
     	FacebookSession::setDefaultApplication(
-    		$this->config->item('facebook_appid'),
-    		$this->config->item('facebook_secret')
-		);
+    	$this->config->item('facebook_appid'),
+    	$this->config->item('facebook_secret')
+    	);
     }
     
-    
-    public function facebook(){
+    public function loginFacebook(){
     	$this->setupFacebookApi();
     
-    	$callback = site_url('conta/loginFacebook');
+    	$callback = site_url('conta/callbackFacebook');
     	$helper = new FacebookRedirectLoginHelper($callback);
     	redirect($helper->getLoginUrl(array('scope' => 'email')));
     }
     
-    private function loginFacebook(){
+    public function callbackFacebook(){
     	$this->setupFacebookApi();
     
-    	$callback = site_url('conta/loginFacebook');
+    	$callback = site_url('conta/callbackFacebook');
     	$session = null;
     
     	$helper = new FacebookRedirectLoginHelper($callback);
@@ -152,21 +148,21 @@ class Conta extends CI_Controller {
     			$request = new FacebookRequest($session, 'GET', '/me?fields=email,id,first_name,last_name');
     			$response = $request->execute();
     			$data = $response->getGraphObject(GraphUser::className());
-    			
+    
     			$user = array(
-    				'nome' => $data->getFirstName(),
-    				'sobrenome' => $data->getLastName(),
-    				'email' => $data->getProperty("email"),
-    				'ctime' => time()
+    					'nome' => $data->getFirstName(),
+    					'sobrenome' => $data->getLastName(),
+    					'email' => $data->getProperty("email"),
+    					'ctime' => time()
     			);
-    			
+    
     			$connection = array(
-    				'id' => $data->getId(),
-    				'token' => $session->getToken()
+    					'id' => $data->getId(),
+    					'token' => $session->getToken(),
+    					'tipo' => 1
     			);
     
-    			$this->tryLoginFacebook($user, $connection);
-    
+    			$this->tryLoginFacebook($connection, $user);
     		}
     	} catch(FacebookRequestException $ex) {
     		echo $ex->getMessage();
@@ -175,22 +171,40 @@ class Conta extends CI_Controller {
     	}
     }
     
-    private function tryLoginFacebook($data, $connection){
+    private function tryLoginFacebook($connection, $user){
     	$this->load->model('conta_model', 'model');
-    	
-    	
-    	/*
-    	 * 
-    	 */
-    	
-    	
-    	
-    	
+    
+    	$usuario = $this->model->getUsuarioByConnection($connection['id']);
+    	if($usuario){
+    		$this->startSession($usuario);
+    	} else {
+    		$usuario = $this->model->getUsuarioNotConnected($user['email']);
+    		if($usuario){
+    			$this->model->insertConnection($usuario->idUsuario, $connection);
+    			$this->startSession($usuario);
+    		} else {
+    			$this->db->trans_start();
+    			$usuarioId = $this->model->insertUser($user);
+    			$this->model->insertConnection($usuarioId, $connection);
+    			$usuario = $this->model->getUsuarioById($usuarioId);
+    			$this->db->trans_complete();
+    			$this->startSession($usuario);
+    		}
+    	}
     }
     
     public function logoff(){
     	$this->session->sess_destroy();
-    	
+    
     	redirect('');
+    }
+    
+    private function startSession($usuario, $redirect = ''){
+    	if(!$usuario)
+    		throw new Exception("Usuário não encontrado");
+    
+    	$this->session->set_userdata('usuario', $usuario);
+    
+    	redirect($redirect);
     }
 }

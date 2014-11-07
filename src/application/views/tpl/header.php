@@ -20,8 +20,10 @@ $title = isset($title) ? $title . ' - Fast Service App' : 'Fast Service App';
 <link rel="stylesheet" type="text/css" href="<?=base_url('assets/css/main.css'); ?>">
 
 <script type="text/javascript">var URL = {base: '<?=base_url(); ?>',site: '<?=site_url(); ?>',current: '<?=current_url(); ?>'};</script>
-<script type="text/javascript" src="<?=base_url('assets/js/jquery.js'); ?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/js/jquery-1.11.1.js'); ?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/js/bootstrap.js'); ?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/js/plugins/maskedinput.js'); ?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/js/plugins/validate.js'); ?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/js/main.js'); ?>"></script>
 
 <!--[if lt IE 9]><script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
