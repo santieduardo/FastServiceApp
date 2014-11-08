@@ -49,9 +49,10 @@ body { padding: 50px 0 0 0;
 .navbar-default .navbar-collapse, .navbar-default .navbar-form { border-color: #FF681D; }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:active, .navbar-default .navbar-toggle:focus { background-color: #FF681D; }
 .navbar-default .navbar-toggle .icon-bar { background-color: #fff; }
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus { background-color: #FF681D; color: #fff; }
 
-.navbar-inverse .navbar-brand { color: #FFF; }
-.navbar-inverse .navbar-brand:hover { color: #777; }
+.navbar-default .navbar-brand { color: #FFF; }
+.navbar-default .navbar-brand:hover { color: #777; }
 a { color: #052f83; text-decoration: none; }
 
 .sidebar .thumbnail:hover { border-color: #052f83; }

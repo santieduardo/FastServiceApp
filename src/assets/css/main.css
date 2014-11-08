@@ -39,10 +39,13 @@ a { color: #052f83; text-decoration: none; }
 .navbar-default .navbar-collapse, .navbar-default .navbar-form { border-color: #FF681D; }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:active, .navbar-default .navbar-toggle:focus { background-color: #FF681D; }
 .navbar-default .navbar-toggle .icon-bar { background-color: #fff; }
+.navbar-default .navbar-toggle .icon-bar { background-color: #fff; }
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus { background-color: #FF681D; color: #fff; }
+.navbar-default .navbar-nav .open .dropdown-menu>li>a { color: #fff; }
+.navbar-default .navbar-brand { color: #FFF; }
+.navbar-default .navbar-brand:hover { color: #777; }
 
-.navbar-profile {}
-.navbar-profile .item { position: relative; padding-right: 55px; }
-.navbar-profile .item .img-thumbnail { position: absolute; right: 15px; top: 50%; width: 32px; height: 32px; margin-top: -16px; }
+.navbar-default .nav>li>a>img { margin-top: -6px; margin-left: 15px; }
 
 /* Catalogo */
 .catalogo {}
@@ -58,3 +61,10 @@ a { color: #052f83; text-decoration: none; }
 /* Conta */
 .conta .link-secundario {line-height: 34px;}
 .navbar-default { border: none; border-bottom: solid 1px #e7e7e7; border-radius: 0px; }
+
+
+/*******/
+@media only screen and (min-width: 768px) {
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a { color: #000; }
+}
+

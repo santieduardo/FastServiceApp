@@ -102,7 +102,7 @@
 							Total: <span class="pull-right" id="total">R$ <?=reais($carrinho->total); ?></span>
 						</div>
 
-						<a class="btn btn-success btn-lg col-md-12 <?=($carrinho->total > 0) ? '' : 'disabled'; ?>" id="cart" href="<?=site_url('checkout'); ?>">
+						<a class="btn btn-success btn-lg col-xs-12 <?=($carrinho->total > 0) ? '' : 'disabled'; ?>" id="cart" href="<?=site_url('checkout'); ?>">
 							<span class="glyphicon glyphicon-shopping-cart"></span> Finalizar Carrinho
 						</a>
 

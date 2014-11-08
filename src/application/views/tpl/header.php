@@ -41,6 +41,7 @@ $title = isset($title) ? $title . ' - Fast Service App' : 'Fast Service App';
 			</button>
 			<a class="navbar-brand" href="<?=site_url(); ?>">Fast Service App</a>
     	</div>
+		
 		<div class="collapse navbar-collapse" id="navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li class="<?=$url == 'catalogo' ? 'active' : ''; ?>"><a href="<?=site_url('catalogo'); ?>">Catálogo</a></li>
@@ -48,22 +49,28 @@ $title = isset($title) ? $title . ' - Fast Service App' : 'Fast Service App';
 			
 			<ul class="nav navbar-nav navbar-right">
 				<?php if(isLogged()){ ?>
-					<li>
-						<a class="item" href="<?=site_url('conta/logoff'); ?>">Sair</a>
-					</li>
-					<li class="navbar-profile">
-						<a class="item">
-							<?=getUserNome(); ?> <img src="<?=avatar_url(); ?>" class="img-thumbnail" width="32" height="32">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<?=getUserNome(); ?>
+							<img src="<?=avatar_url(); ?>" class="img-thumbnail pull-right" width="32" height="32">
 						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="<?=site_url('conta'); ?>">Detalhes</a></li>
+							<li><a href="<?=site_url('conta/logoff'); ?>">Sair</a></li>
+							
+						</ul>
 					</li>
 				<?php } else { ?>
-					<li>
-						<a class="item" href="<?=site_url('conta/registrar'); ?>">Criar Conta</a>
-					</li>
-					<li class="navbar-profile">
-						<a class="item" href="<?=site_url('conta/login'); ?>">
-							Login <img src="<?=avatar_url(false); ?>" class="img-thumbnail" width="32" height="32">
+					<li class="dropdown">
+						<a href="<?=site_url('conta/login'); ?>" class="dropdown-toggle">
+							Login
+							<img src="<?=avatar_url(false); ?>" class="img-thumbnail pull-right" width="32" height="32">
 						</a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="<?=site_url('conta'); ?>">Detalhes</a></li>
+							<li><a href="<?=site_url('conta/logoff'); ?>">Sair</a></li>
+							
+						</ul>
 					</li>
 				<?php } ?>
 			</ul>

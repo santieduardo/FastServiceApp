@@ -8,7 +8,7 @@
 		?>
 		
 		<br>
-		<a href="<?=site_url('conta/loginFacebook'); ?>" class="btn btn-facebook col-md-12">Logar com Facebook</a>
+		<a href="<?=site_url('conta/loginFacebook'); ?>" class="btn btn-facebook col-xs-12">Cadastrar com Facebook</a>
 		<br>
 		<br><hr>
 		
@@ -33,7 +33,7 @@
 				<label for="label-confirma-senha">Confirmar Senha</label>
 				<input type="password" class="form-control" name="confirma-senha" id="label-confirma-senha" placeholder="Confirme a senha" required="required">
 			</div>
-			<a class="pull-left link-secundario" href="<?=site_url(); ?>">Cancelar</a>
+			<a class="pull-left link-secundario" href="<?=site_url('conta/login'); ?>">Logar</a>
 			<button type="submit" class="btn btn-success pull-right">		
 				<span class="glyphicon glyphicon-ok"></span>
 				Enviar

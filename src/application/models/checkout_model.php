@@ -38,7 +38,8 @@ class Checkout_model extends CI_Model {
 		
 		$this->db->insert('pedidos', array(
 			'usuario' => getUserId(),
-			'status' => 2
+			'status' => 2,
+			'ctime' => time()
 		));
 		$pedidoId = $this->db->insert_id();
 		

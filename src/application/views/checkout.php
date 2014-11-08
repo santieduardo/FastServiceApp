@@ -45,7 +45,7 @@
 							
 							<input type="hidden" value="<?=time(); ?>" name="time">
 																								
-							<button type="submit" class="btn btn-success btn-lg col-md-12" <?=($carrinho->total > 0) ? '' : 'disabled="disabled"'; ?>>
+							<button type="submit" class="btn btn-success btn-lg col-xs-12 col-sm-6 col-lg-4 col-sm-offset-3 col-lg-offset-4" <?=($carrinho->total > 0) ? '' : 'disabled="disabled"'; ?>>
 								<span class="glyphicon glyphicon-ok"></span> Finalizar
 							</button>
 						<?php } ?>
