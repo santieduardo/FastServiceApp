@@ -54,26 +54,14 @@ class Pedidos extends CI_Controller {
 		}
 		
 		$this->load->view('tpl/header');
-		$this->load->view('pedidos/novo');
+		$this->load->view('pedidos/novo'); // !<-- a view novo não esta recebendo os produtos
 		$this->load->view('tpl/footer');
 	}
 		
 	private function novoPost(){
 		$data = array(
 			'nome' => $this->input->post('nome'),
-			'razao' => $this->input->post('razao'),
-			'cnpj' => $this->input->post('cnpj'),
-			'ie' => $this->input->post('ie'),
-			'endereco' => $this->input->post('endereco'),
-			'bairro' => $this->input->post('bairro'),
-			'cep' => $this->input->post('cep'),
-			'cidade' => $this->input->post('cidade'),
-			'uf' => $this->input->post('uf'),
-			'tel' => $this->input->post('tel'),
-			'limite' => $this->input->post('limite'),
-			'limite_rest' => $this->input->post('limite'),
-			'end_cob' => $this->input->post('end_cob'),
-			'sif' => $this->input->post('sif')
+			'razao' => $this->input->post('razao')
 		);
 		
 		$pedido = $this->pedidos->getPedidoByCNPJ($data['cnpj']);
@@ -112,18 +100,7 @@ class Pedidos extends CI_Controller {
 	private function editarPost($pedido){
 		$data = array(
 			'nome' => $this->input->post('nome'),
-			'razao' => $this->input->post('razao'),
-			'cnpj' => $this->input->post('cnpj'),
-			'ie' => $this->input->post('ie'),
-			'endereco' => $this->input->post('endereco'),
-			'bairro' => $this->input->post('bairro'),
-			'cep' => $this->input->post('cep'),
-			'cidade' => $this->input->post('cidade'),
-			'uf' => $this->input->post('uf'),
-			'tel' => $this->input->post('tel'),
-			'limite' => $this->input->post('limite'),
-			'end_cob' => $this->input->post('end_cob'),
-			'sif' => $this->input->post('sif')
+			'razao' => $this->input->post('razao')
 		);
 	
 		$tempPedido = $this->pedidos->getPedidoByCNPJ($data['cnpj']);
