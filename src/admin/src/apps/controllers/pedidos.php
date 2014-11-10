@@ -37,7 +37,7 @@ class Pedidos extends CI_Controller {
 		));
 		$this->load->view('tpl/footer');
 	}
-	
+
 	public function novo(){
 		
 		$term = $this->input->get('term');
@@ -57,7 +57,7 @@ class Pedidos extends CI_Controller {
 		$this->load->view('pedidos/novo');
 		$this->load->view('tpl/footer');
 	}
-	
+		
 	private function novoPost(){
 		$data = array(
 			'nome' => $this->input->post('nome'),

@@ -23,8 +23,24 @@
 			     <th colspan="2">Valor Unitário</th>
 		      </tr>
 		  	</thead>		  		
-		    <tbody>				
-				<?php for($i = 0; $i < 10; $i++){ ?>	  
+		    <tbody> <!-- rever -->
+		    	<?php if(sizeof($produtos) > 0){ ?>
+					<?php foreach($produtos as $row){ ?>
+		    			<tr>
+		    				<td><?=$row->nome; ?></td>
+		    				<td><?=$row->preco; ?></td>
+		    			</tr>
+		    		<?php } ?>
+		    	<?php } else { ?>
+					<tr>
+						<td class="text-center" colspan="5">
+							<br>Não foi encontrado nenhum resultado<br><br>
+						</td>
+					</tr>
+		<?php } ?>
+		    
+		     <!-- 			
+				<?php for($i = 0; $i < 10; $i++){ ?>
 				<tr>			
 					<td>Produto 2</td>
 					<td>R$ 2,50</td>
@@ -40,14 +56,14 @@
 						</form>
 					</td>					
 			  </tr>
-			<?php } ?>
+			<?php } ?> -->
 		</tbody>
 	  </table>	
 	</div>
 	
 	<div class="row hidden-print">
 		<div class="col-md-12">
-			<?=$pagination; ?>
+			<!-- <?=$pagination; ?> -->
 		</div>
 	</div>
 </div>

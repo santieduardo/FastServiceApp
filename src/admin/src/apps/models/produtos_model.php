@@ -15,6 +15,15 @@ class Produtos_model extends CI_Model {
 		));
 	}
 	
+	//rever
+	function getItens(){
+		$query = $this->db->select('nome, preco')
+		->from('produtos')
+		->order_by('nome', 'asc');
+	
+		return $query->get()->result();
+	}
+	
 	function getProdutosSize($term){
 		$query = $this->db->select('id_produto')
 			->from('produto');

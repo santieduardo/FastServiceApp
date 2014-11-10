@@ -16,6 +16,14 @@ class Pedidos_model extends CI_Model {
 		));
 	}
 	
+	function getItens(){
+		$query = $this->db->select('nome, preco')
+		->from('produtos')
+		->order_by('nome', 'asc');
+	
+		return $query->get()->result();
+	}
+	
 	private function pedidosOrdem(&$query, $ordem){
 		switch($ordem){
 			case 1 : $query->order_by('cliente', 'asc'); break;

@@ -29,6 +29,29 @@ class Produtos extends CI_Controller {
 			'pagination' => $pagination
 		));
 		$this->load->view('tpl/footer');
+	}	
+	
+	//rever
+	public function showProdutos(){
+		if ($this->input->post()){
+			try {
+				$this->showProdutosPost();
+			} catch (Exception $e){
+				fail($e->getMessage(), true);
+			}
+		}		
+		
+		$this->load->view('tpl/header');
+		$this->load->view('pedidos/novo');
+		$this->load->view('tpl/footer');
+	}
+	
+	//rever
+	private function showProdutosPost(){
+		$data = array(
+			'nome' => $this->input->post('nome'),
+			'preco' => $this->input->post('preco')
+		);
 	}
 	
 	public function novo(){
