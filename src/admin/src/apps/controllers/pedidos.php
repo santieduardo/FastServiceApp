@@ -8,7 +8,6 @@ class Pedidos extends CI_Controller {
 		$this->load->helper('pedidos');
 		$this->load->model('pedidos_model', 'pedidos');
 		$this->load->model('produtos_model', 'produtos');
-		
 	}
 
 	public function index(){
@@ -39,22 +38,12 @@ class Pedidos extends CI_Controller {
 	}
 
 	public function novo(){
-		
-		$term = $this->input->get('term');
-		$page = $this->input->get('per_page');
-		if(!is_numeric($page)) $page = 0;
-		
-		
-		if($this->input->post()){
-			try {		
-				$this->novoPost();
-			} catch (Exception $ex){
-				fail($ex->getMessage(), true);
-			}
-		}
+		$pedidos = $this->pedidos->getListaProdutos();
 		
 		$this->load->view('tpl/header');
-		$this->load->view('pedidos/novo'); // !<-- a view novo não esta recebendo os produtos
+		$this->load->view('pedidos/novo', array(
+			'pedidos' => $pedidos
+		));
 		$this->load->view('tpl/footer');
 	}
 		

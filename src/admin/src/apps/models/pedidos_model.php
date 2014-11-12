@@ -15,15 +15,7 @@ class Pedidos_model extends CI_Model {
 			'usuarios.nome' => $term
 		));
 	}
-	
-	function getItens(){
-		$query = $this->db->select('nome, preco')
-		->from('produtos')
-		->order_by('nome', 'asc');
-	
-		return $query->get()->result();
-	}
-	
+		
 	private function pedidosOrdem(&$query, $ordem){
 		switch($ordem){
 			case 1 : $query->order_by('cliente', 'asc'); break;
@@ -79,10 +71,11 @@ class Pedidos_model extends CI_Model {
 			->get()->row();
 	}
 	
-	function getPedidosLista(){
-		return $this->db->select('id_cliente, nro')
-			->from('pedido')
-			->order_by('nro', 'asc')
-			->get()->result();
+	function getListaProdutos(){
+		$pedidos = $this->db->select('idProduto, nome, preco')
+			->from('produtos')
+			->order_by('nome', 'asc');
+		
+		return $pedidos->get()->result();
 	}
 }
