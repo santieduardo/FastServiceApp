@@ -64,11 +64,12 @@ class Pedidos_model extends CI_Model {
 			->get()->row();
 	}
 	
-	function getPedidoById($pedidoId){
-		return $this->db->select('id_cliente, nome, razao, cnpj, ie, endereco, bairro, cep, cidade, uf, tel, limite, limite_rest, end_cob, sif')
-			->from('pedido')
-			->where('id_cliente', $pedidoId)
-			->get()->row();
+	function getProdutoById($idProduto){
+		$pedidos = $this->db->select('idProduto, nome, preco')
+			->from('produtos')
+			->where('idProduto', $idProduto);
+		
+		return $pedidos->get()->result();
 	}
 	
 	function getListaProdutos(){

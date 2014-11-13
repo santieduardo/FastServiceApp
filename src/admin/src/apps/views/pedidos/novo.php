@@ -30,8 +30,8 @@
 		    				<td><?=$row->nome; ?></td>
 		    				<td><?=$row->preco; ?></td>
 		    				<td class="text-right" width="200">
-								<form action="" method="post">
-									<input type="hidden" value="1" name="produtoId">
+								<form action="<?=site_url('pedidos/addCarrinho'); ?>" method="post">
+									<input type="hidden" value="<?=$row->idProduto; ?>" name="produtoId">
 									<div class="col-md-8">
 										<input type="number" value="1" name="qtd" min="0" class="form-control">
 									</div>
@@ -70,15 +70,18 @@
 	       <thead>       
 		      <tr>
 			     <th>Produto</th>
-			     <th>Valor</th>
+			     <th>Valor unit</th>
+			     <th>Qtd</th>
 			     <th></th>
 		      </tr>
 		  	</thead>		  		
 		    <tbody>				
-				<?php for($i = 0; $i < 10; $i++){ ?>	  
+				<?php if(sizeof($pedidosAdd) > 0){ ?>
+					<?php foreach($pedidosAdd as $linha){ ?>
 				<tr>			
-					<td>Produto 2</td>
-					<td>02,50</td>			 
+					<td><?=$linha->nome; ?></td>
+		    		<td><?=$linha->preco; ?></td>
+		    		<td><?=$qtd; ?></td>
 					<td class="text-right">
 						<form action="">
 							<input type="number" value="1" name="qtd" min="0">
@@ -88,7 +91,8 @@
 						</form>
 					</td>					
 			  </tr>
-			<?php } ?>
+			  <?php } ?>
+		<?php } ?>
 		</tbody>
 	  </table>	
 	</div>

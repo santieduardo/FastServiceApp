@@ -8,6 +8,7 @@ class Pedidos extends CI_Controller {
 		$this->load->helper('pedidos');
 		$this->load->model('pedidos_model', 'pedidos');
 		$this->load->model('produtos_model', 'produtos');
+		$this->load->library('session');
 	}
 
 	public function index(){
@@ -35,6 +36,24 @@ class Pedidos extends CI_Controller {
 			'pagination' => $pagination
 		));
 		$this->load->view('tpl/footer');
+	}
+	
+	public function addCarrinho(){
+		$qtd = $this->input->post('qtd');
+		$idProduto = $this->input->post('produtoId');
+		
+		$pedidosAdd = $this->pedidos->getProdutoById($idProduto);
+		
+		$pedidos = $this->pedidos->getListaProdutos();
+		
+		$this->load->view('tpl/header');
+		$this->load->view('pedidos/novo', array(
+				'pedidosAdd' => $pedidosAdd,
+				'pedidos' => $pedidos,
+				'qtd' => $qtd
+		));
+		$this->load->view('tpl/footer');
+		
 	}
 
 	public function novo(){
