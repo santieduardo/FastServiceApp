@@ -1,4 +1,22 @@
 <?php
+function getKeyFromArray(&$vetor, $key, $value){
+	foreach($vetor as $index => $rows){
+		if($rows->$key == $value){
+			return $index;
+		}
+	}
+	
+	return -1;
+}
+
+function resetKeys(&$vetor){
+	$new = array();
+	foreach($vetor as $value)
+		array_push($new, $value);
+	
+	$vetor = $new;
+}
+
 function debug($data){
 	echo '<pre>';
 	print_r($data);

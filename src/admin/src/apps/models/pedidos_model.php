@@ -48,23 +48,42 @@ class Pedidos_model extends CI_Model {
 		return $query->get()->result();
 	}
 	
-	function insertPedido($data){
-		$this->db->insert('pedido', $data);
-		return $this->db->insert_id();
+	function insertPedido($produtos){
+		$this->db->trans_start();
+	
+		$this->db->insert('pedidos', array(
+			'usuario' => 0,
+			'status' => 1,
+			'ctime' => time()
+		));
+		$pedidoId = $this->db->insert_id();
+	
+		$total = 0;
+		$inserts = array();
+		foreach($produtos as $row){
+			array_push($inserts, array(
+				'produto' => $row->idProduto,
+				'pedido' => $pedidoId,
+				'quantidade' => $row->quantidade
+			));
+			$total += $row->quantidade * $row->preco;
+		}
+	
+		$this->db->insert_batch('pedidos_produtos', $inserts);
+	
+		$this->db->where('idPedido', $pedidoId)->update('pedidos', array(
+			'total' => $total
+		));
+			
+		$this->db->trans_complete();
+	
+		if($this->db->trans_status() === false)
+			return false;
+	
+		return $pedidoId;
 	}
 	
-	function updatePedido($pedidoId, $data){
-		$this->db->where('id_cliente', $pedidoId)->update('pedido', $data);
-	}
-	
-	function getPedidoByCNPJ($cnpj){
-		return $this->db->select('id_cliente, nome')
-			->from('pedido')
-			->where('cnpj', $cnpj)
-			->get()->row();
-	}
-	
-	function getProdutoById($idProduto){
+	function getPedidoById($idProduto){
 		$pedidos = $this->db->select('idProduto, nome, preco')
 			->from('produtos')
 			->where('idProduto', $idProduto);

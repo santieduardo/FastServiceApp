@@ -5,8 +5,8 @@
 | Facebook Configs
 |--------------------------------------------------------------------------
 */
-$config['facebook_appid'] = '868202313220203';
-$config['facebook_secret'] = 'fe13e5d934b835a34f1e68af6ed1f74a';
+$config['facebook_appid'] = '872830076090760';
+$config['facebook_secret'] = '20100e2d97f63d6a36d1f0aa17fc5cdb';
 
 /*
 |--------------------------------------------------------------------------

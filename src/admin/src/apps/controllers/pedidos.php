@@ -8,7 +8,6 @@ class Pedidos extends CI_Controller {
 		$this->load->helper('pedidos');
 		$this->load->model('pedidos_model', 'pedidos');
 		$this->load->model('produtos_model', 'produtos');
-		$this->load->library('session');
 	}
 
 	public function index(){
@@ -38,48 +37,144 @@ class Pedidos extends CI_Controller {
 		$this->load->view('tpl/footer');
 	}
 	
-	public function addCarrinho(){
-		$qtd = $this->input->post('qtd');
-		$idProduto = $this->input->post('produtoId');
-		
-		$pedidosAdd = $this->pedidos->getProdutoById($idProduto);
-		
-		$pedidos = $this->pedidos->getListaProdutos();
-		
-		$this->load->view('tpl/header');
-		$this->load->view('pedidos/novo', array(
-				'pedidosAdd' => $pedidosAdd,
-				'pedidos' => $pedidos,
-				'qtd' => $qtd
-		));
-		$this->load->view('tpl/footer');
-		
-	}
-
 	public function novo(){
-		$pedidos = $this->pedidos->getListaProdutos();
+		$term = $this->input->get('term');
+		$page = $this->input->get('per_page');
+		if(!is_numeric($page)) $page = 0;
+		
+		$size = $this->produtos->getProdutosSize($term);
+		$produtos = $this->produtos->getProdutos($page, $term);
+		$pagination = pagination(array(
+			'base_url' => site_url('pedidos/novo?term=' .$term),
+			'total_rows' => $size,
+			'per_page' => PAGE_LIMIT
+		));
 		
 		$this->load->view('tpl/header');
 		$this->load->view('pedidos/novo', array(
-			'pedidos' => $pedidos
+			'produtos' => $produtos,
+			'carrinho' => $this->getCarrinho(),
+			'size' => $size,
+			'pagination' => $pagination
 		));
 		$this->load->view('tpl/footer');
 	}
+	
+	
+	private function getCarrinho($reset = false){
+		$carrinho = $this->session->userdata('carrinho_admin');
+		if(!$carrinho || $reset){
+			$carrinho = (Object) array(
+				'produtos' => array(),
+				'total' => 0
+			);
+			$this->saveCarrinho($carrinho);
+		}
+		return $carrinho;
+	}
+	
+	private function saveCarrinho($carrinho){
+		$this->session->set_userdata('carrinho_admin', $carrinho);
+	}
+	
+	public function resetPedido(){
+		$this->getCarrinho(true);
 		
-	private function novoPost(){
-		$data = array(
-			'nome' => $this->input->post('nome'),
-			'razao' => $this->input->post('razao')
-		);
+		redirect('pedidos/novo');
+	}
+	
+	public function addProduto($produtoId){
+		$carrinho = $this->getCarrinho();
 		
-		$pedido = $this->pedidos->getPedidoByCNPJ($data['cnpj']);
-		if($pedido){
-			throw new Exception('CNPJ já cadastrado. Link <a href="'.site_url('pedidos/editar/' . $pedido->id_pedido).'">'.$pedido->nome.'</a>');
-		} else {
+		$qtd = $this->input->post('qtd');
+		if(!is_numeric($produtoId) || !is_numeric($qtd)) show_404();
+		$produto = $this->produtos->getProdutoById($produtoId);
 		
-			$pedidoId = $this->pedidos->insertPedido($data);
-			success('Pedido cadastrado com sucesso.');
-			redirect("pedidos#id=" . $pedidoId);
+		if($produto){
+			$key = getKeyFromArray($carrinho->produtos, 'idProduto', $produto->idProduto);
+			
+			if($key >= 0){
+				$carrinho->produtos[$key]->quantidade += $qtd;
+			} else {
+				array_push($carrinho->produtos, (Object) array(
+					'idProduto' => $produto->idProduto,
+					'nome' => $produto->nome,
+					'preco' => $produto->preco,
+					'quantidade' => $qtd	
+				));
+			}
+			
+			$carrinho->total += $produto->preco * $qtd;
+			$this->saveCarrinho($carrinho);
+			
+			redirect('pedidos/novo');
+		} else
+			show_404();
+	}
+	
+	public function atualizarProduto($produtoId){
+		$carrinho = $this->getCarrinho();
+	
+		$qtd = $this->input->post('qtd');
+		if(!is_numeric($produtoId) || !is_numeric($qtd)) show_404();
+		$produto = $this->produtos->getProdutoById($produtoId);
+	
+		if($produto){
+			$key = getKeyFromArray($carrinho->produtos, 'idProduto', $produto->idProduto);
+			
+			if($key >= 0){
+				$carrinho->total -= $produto->preco * $carrinho->produtos[$key]->quantidade;
+				$carrinho->produtos[$key]->quantidade = $qtd;
+				$carrinho->total += $produto->preco * $qtd;
+			}
+			
+			$this->saveCarrinho($carrinho);
+			redirect('pedidos/novo');
+		} else
+			show_404();
+	}
+	
+	public function removerProduto($produtoId){
+		$carrinho = $this->getCarrinho();
+
+		if(!is_numeric($produtoId)) show_404();
+		$produto = $this->produtos->getProdutoById($produtoId);
+		
+		if($produto){
+			$key = getKeyFromArray($carrinho->produtos, 'idProduto', $produto->idProduto);
+			if($key >= 0){
+				$temp = $carrinho->produtos[$key];
+				$valor = $temp->quantidade * $produto->preco;
+						
+				unset($carrinho->produtos[$key]);
+				resetKeys($carrinho->produtos);
+				$carrinho->total -= $valor;
+				$this->saveCarrinho($carrinho);
+			}
+			
+			redirect('pedidos/novo');
+		} else 
+			show_404();
+	}
+	
+	public function finalizarPedido(){
+		$carrinho = $this->getCarrinho();
+		if(sizeof($carrinho->produtos) > 0){
+				
+			$idPedido = $this->pedidos->insertPedido($carrinho->produtos);
+				
+			if($idPedido && $idPedido > 0){
+				$this->saveCarrinho((Object) array(
+					'produtos' => array(),
+					'total' => 0.0
+				));
+				
+				success("Pedido realizado com sucesso!");
+				redirect('pedidos/ver/' . $idPedido);
+			} else {
+				fail("O pedido tem que ter um ou mais produtos para poder ser finalizado!");
+				redirect('pedidos/novo');
+			}
 		}
 	}
 	
@@ -113,7 +208,7 @@ class Pedidos extends CI_Controller {
 	
 		$tempPedido = $this->pedidos->getPedidoByCNPJ($data['cnpj']);
 		if($tempPedido && $tempPedido->id_pedido != $pedido->id_pedido){
-			throw new Exception('CNPJ já cadastrado. Link <a href="'.site_url('pedidos/editar/' . $tempPedido->id_pedido).'">'.$tempPedido->nome.'</a>');
+			throw new Exception('CNPJ jÃ¡ cadastrado. Link <a href="'.site_url('pedidos/editar/' . $tempPedido->id_pedido).'">'.$tempPedido->nome.'</a>');
 		} else {
 			$this->pedidos->updatePedido($pedido->id_pedido, $data);
 			success('Pedido atualizado com sucesso.');

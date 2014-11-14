@@ -8,25 +8,28 @@ class Produtos_model extends CI_Model {
 	
 	private function produtosTerm(&$query, $term){
 		if(is_numeric($term)){
-			$query->like('id_produto', $term);
+			$query->like('produtos.idProduto', $term);
 		}
 		$query->or_like(array(
-			'nome' => $term
+			'categorias.nome' => $term,
+			'produtos.nome' => $term
 		));
 	}
 	
 	function getProdutosSize($term){
-		$query = $this->db->select('id_produto')
-			->from('produto');
+		$query = $this->db->select('idProduto')
+			->from('produtos')
+			->join('categorias', 'produtos.categoria = categorias.idCategoria', 'inner');
 			
 		$this->produtosTerm($query, $term);
 		return $query->get()->num_rows();
 	}
 	
 	function getProdutos($page, $term){
-		$query = $this->db->select('id_produto, nome')
-			->from('produto')
-			->order_by('nome', 'asc')
+		$query = $this->db->select('produtos.idProduto, produtos.nome, produtos.preco, categorias.nome as categoria')
+			->from('produtos')
+			->join('categorias', 'produtos.categoria = categorias.idCategoria', 'inner')
+			->order_by('produtos.nome', 'asc')
 			->limit(PAGE_LIMIT, $page);
 		
 		
@@ -48,15 +51,15 @@ class Produtos_model extends CI_Model {
 	}
 	
 	function getProdutoById($produtoId){
-		return $this->db->select('id_produto, nome')
-			->from('produto')
-			->where('id_produto', $produtoId)
+		return $this->db->select('idProduto, nome, preco')
+			->from('produtos')
+			->where('idProduto', $produtoId)
 			->get()->row();
 	}
 	
 	function getProdutosLista(){
-		return $this->db->select('id_produto, nome')
-			->from('produto')
+		return $this->db->select('idProduto, nome, preco')
+			->from('produtos')
 			->order_by('nome', 'asc')
 			->get()->result();
 	}
