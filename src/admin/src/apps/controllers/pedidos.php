@@ -30,6 +30,7 @@ class Pedidos extends CI_Controller {
 		$this->load->view('tpl/header');
 		$this->load->view('pedidos/lista', array(
 			'pedidos' => $pedidos,
+			'status' => getStatus(),
 			'size' => $size,
 			'ordem' => $ordem,
 			'pagination' => $pagination
@@ -176,6 +177,27 @@ class Pedidos extends CI_Controller {
 				redirect('pedidos/novo');
 			}
 		}
+	}
+	
+	public function cancelar($pedidoId){
+		$pedido = $this->pedidos->getPedidoById($pedidoId);
+		if($pedido){	
+			if($this->input->post()){
+				$this->pedidos->updatePedido($pedido->idPedido, array(
+					'status' => 0
+				));
+
+				success("Pedido cancelado com sucesso!");
+				redirect('pedidos');
+			}
+			
+			$this->load->view('tpl/header');
+			$this->load->view('pedidos/cancelar', array(
+					'pedido' => $pedido
+			));
+			$this->load->view('tpl/footer');
+		} else
+			show_404();
 	}
 	
 	public function editar($pedidoId){

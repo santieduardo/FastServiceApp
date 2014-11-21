@@ -36,7 +36,7 @@ class Pedidos_model extends CI_Model {
 	}
 	
 	function getPedidos($page, $term, $ordem){
-		$query = $this->db->select('pedidos.idPedido, usuarios.nome as cliente, pedidos.total, pedidos.ctime, sum(pedidos_produtos.quantidade) as quantidade')
+		$query = $this->db->select('pedidos.idPedido, usuarios.nome as cliente, pedidos.total, pedidos.status, pedidos.ctime, sum(pedidos_produtos.quantidade) as quantidade')
 			->from('pedidos')
 			->join('usuarios', 'pedidos.usuario = usuarios.idUsuario', 'inner')
 			->join('pedidos_produtos', 'pedidos.idPedido = pedidos_produtos.pedido', 'left outer')
@@ -83,19 +83,14 @@ class Pedidos_model extends CI_Model {
 		return $pedidoId;
 	}
 	
-	function getPedidoById($idProduto){
-		$pedidos = $this->db->select('idProduto, nome, preco')
-			->from('produtos')
-			->where('idProduto', $idProduto);
-		
-		return $pedidos->get()->result();
+	function getPedidoById($idPedido){
+		return $this->db->select('idPedido, usuario, total, ctime, status')
+			->from('pedidos')
+			->where('idPedido', $idPedido)
+			->get()->row();
 	}
 	
-	function getListaProdutos(){
-		$pedidos = $this->db->select('idProduto, nome, preco')
-			->from('produtos')
-			->order_by('nome', 'asc');
-		
-		return $pedidos->get()->result();
+	function updatePedido($idPedido, $data){
+		$this->db->where('idPedido', $idPedido)->update('pedidos', $data);
 	}
 }

@@ -1,7 +1,7 @@
 <h4 class="page-header">Pedidos</h4>
 
 <div class="row hidden-print">
-	<div class="col-md-7">
+	<div class="col-md-6">
 		<div class="btn-group">
 			<a href="<?=site_url('pedidos/novo'); ?>" class="btn btn-default">
 				 <span class="glyphicon glyphicon-plus"></span> Cadastrar
@@ -9,10 +9,10 @@
 		</div>
 	</div>
 	<div class="col-md-1">&nbsp;</div>
-	<div class="col-md-4">
+	<div class="col-md-5">
 		<form role="form" method="get" action="<?=site_url('pedidos'); ?>">
 			<div class="input-group">
-				<input type="text" class="form-control" name="term" value="<?=$this->input->get('term'); ?>" placeholder="Procurar...">
+				<input type="text" class="form-control" name="term" value="<?=$this->input->get('term'); ?>" placeholder="Buscar por número do pedido ou cliente">
 				<span class="input-group-btn">
 					<button class="btn btn-default" type="submit">
 						<span class="glyphicon glyphicon-search"></span>
@@ -37,17 +37,20 @@
 		<?php if(sizeof($pedidos) > 0){ ?>
 			<?php foreach($pedidos as $row){ ?>
 				<tr>
-					<td><?=$row->idPedido; ?></td>
+					<td>
+						<span class="glyphicon glyphicon-tag text-<?=$status[$row->status]->classe; ?>"></span>
+						<?=$row->idPedido; ?>
+					</td>
 					<td><?=date("d/m/Y h:i"); ?></td>
 					<td><?=$row->cliente; ?></td>
 					<td class="text-right">R$ <?=reais($row->total); ?></td>
 					<td class="text-center hidden-print">
 						<div class="btn-group">
-							<a href="<?=site_url('plantas/editar/' . $row->idPedido); ?>" class="btn btn-default">
+							<a href="<?=site_url('pedidos/editar/' . $row->idPedido); ?>" class="btn btn-default">
 								<span class="glyphicon glyphicon-pencil"></span>
 							</a>
 							
-							<a href="<?=site_url('plantas/remover/' . $row->idPedido); ?>" class="btn btn-default">
+							<a href="<?=site_url('pedidos/cancelar/' . $row->idPedido); ?>" class="btn btn-default">
 								<span class="glyphicon glyphicon-trash"></span>
 							</a>
 						</div>
@@ -64,10 +67,14 @@
 	</tbody>
 </table>
 <div class="row hidden-print">
-	<div class="col-md-9">
+	<div class="col-md-4">
 		<?=$pagination; ?>
 	</div>
-	<div class="col-md-3 text-right">
-		<p class="text-muted"><?=$size; ?> Registros</p>
+	<div class="col-md-8 text-right">
+		<?php foreach($status as $row){ ?>
+			<p class="legenda-footer legend-<?=$row->classe; ?>">
+				<span class="glyphicon glyphicon-tag"></span> <?=$row->alt; ?>
+			</p>
+		<?php } ?>
 	</div>
 </div>

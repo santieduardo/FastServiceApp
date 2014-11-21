@@ -65,7 +65,6 @@
 		<div class="row">
 			<h4 style="text-align: center">Pedido</h4>
 		</div>
-		<br>
 		<div class="row">
 			<a class="btn btn-warning col-xs-12" href="<?=site_url('pedidos/resetPedido'); ?>" onclick="return confirm('Tem Certeza');">
 				<span class="glyphicon glyphicon-ok"></span> Limpar Pedido
