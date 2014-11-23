@@ -67,4 +67,8 @@ class Checkout_model extends CI_Model {
 		
 		return $pedidoId;
 	}	
+	
+	function updatePedido($idPedido, $data){
+		$this->db->where('idPedido', $idPedido)->update('pedidos', $data);
+	}
 }

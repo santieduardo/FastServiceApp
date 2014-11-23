@@ -20,6 +20,7 @@ class Checkout extends CI_Controller {
 		
 		$this->load->view('checkout', array(
 			'carrinho' => $carrinho
+			
 		));
 		
 		
@@ -88,6 +89,21 @@ class Checkout extends CI_Controller {
 		}
 	}
 	
+	public function cancelar($pedidoId){
+		$this->load->model('checkout_model', 'checkout');
+
+		$this->checkout->updatePedido($pedidoId, array( 
+			'status' => 0
+		));
+	
+		redirect('catalogo');
+				
+		$this->load->view('tpl/header');
+		$this->load->view('checkout/cancelar', array(
+			'pedido' => $pedido
+		));
+		$this->load->view('tpl/footer');
+	}
 
 	public function pedido($pedidoId){
 		if(!is_numeric($pedidoId)) show_404();
