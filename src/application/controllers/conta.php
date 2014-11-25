@@ -7,6 +7,43 @@ use Facebook\GraphUser;
 
 class Conta extends CI_Controller {
 	
+	public function detalhes(){
+		$this->load->model('checkout_model', 'checkout');
+		$this->load->model('conta_model', 'conta');
+		
+		$this->load->view('tpl/header');
+
+		$idUsuario = $this->session->userdata('usuario');
+
+		$status = 2;
+		
+		$idPedido = $this->checkout->getIdPedidoByIdUsuario($idUsuario->idUsuario, $status);
+
+		$this->load->view('conta/detalhes', array (
+				'pedidos' => $idPedido
+		));
+	
+		$this->load->view('tpl/footer');
+		
+	}
+	
+	public function cancelar($pedidoId){
+		$this->load->model('checkout_model', 'checkout');
+	
+		$this->checkout->updatePedido($pedidoId, array(
+				'status' => 0
+		));
+	
+		redirect('conta/detalhes');
+		
+		$this->load->view('tpl/header');
+		$this->load->view('checkout/cancelar', array(
+				'pedido' => $pedido
+		));
+		$this->load->view('tpl/footer');
+
+	}
+
 	public function login(){
 		if(isLogged()) show_404();
 		$erro = false;

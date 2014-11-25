@@ -55,7 +55,7 @@ $title = isset($title) ? $title . ' - Fast Service App' : 'Fast Service App';
 							<img src="<?=avatar_url(); ?>" class="img-thumbnail pull-right" width="32" height="32">
 						</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="<?=site_url('conta'); ?>">Detalhes</a></li>
+							<li><a href="<?=site_url('conta/detalhes'); ?>">Detalhes</a></li>
 							<li><a href="<?=site_url('conta/logoff'); ?>">Sair</a></li>
 							
 						</ul>
@@ -67,7 +67,7 @@ $title = isset($title) ? $title . ' - Fast Service App' : 'Fast Service App';
 							<img src="<?=avatar_url(false); ?>" class="img-thumbnail pull-right" width="32" height="32">
 						</a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="<?=site_url('conta'); ?>">Detalhes</a></li>
+							<li><a href="<?=site_url('conta/detalhes'); ?>">Detalhes</a></li>
 							<li><a href="<?=site_url('conta/logoff'); ?>">Sair</a></li>
 							
 						</ul>
