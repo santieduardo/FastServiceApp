@@ -63,6 +63,8 @@ a { color: #052f83; text-decoration: none; }
 .navbar-default { border: none; border-bottom: solid 1px #e7e7e7; border-radius: 0px; }
 
 
+.checkout .btn-cancelar { float: right; }
+
 /*******/
 @media only screen and (min-width: 768px) {
 	.navbar-default .navbar-nav .open .dropdown-menu>li>a { color: #000; }

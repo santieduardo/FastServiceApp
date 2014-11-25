@@ -37,9 +37,11 @@
 							<div class="well well-sm">
 								Total: <span class="pull-right" id="total">R$ <?=reais($pedido->total); ?></span>
 							</div>
-							<a href="<?=site_url('checkout/cancelar/' . $pedido->idPedido); ?>" class="btn btn-default">
-								<span class="glyphicon glyphicon-trash"></span>
-							</a>
+							<div class="btn-cancelar">
+								<a href="<?=site_url('checkout/cancelar/' . $pedido->idPedido); ?>" class="btn btn-default">
+									<span class="glyphicon glyphicon-trash"></span> Cancelar pedido
+								</a>
+							</div>
 					
 							<div class="text-center">
 								<img alt="" src="<?=site_url('checkout/qr/'.$pedido->idPedido); ?>" width="400">
