@@ -6,6 +6,16 @@ class Produtos_model extends CI_Model {
 		parent::__construct();
 	}
 	
+	function getItensPedido($idPedido) {
+		return $this->db->select('produtos.nome, produtos.preco, pedidos_produtos.quantidade')
+		->from('pedidos')
+		->join('pedidos_produtos', 'pedidos_produtos.pedido = pedidos.idPedido', 'inner')
+		->join('produtos', 'pedidos_produtos.produto = produtos.idproduto', 'inner')
+		->where('pedidos.idPedido', $idPedido)
+		->order_by('produtos.nome', 'asc')
+		->get()->result();
+	}
+	
 	private function produtosTerm(&$query, $term){
 		if(is_numeric($term)){
 			$query->like('produtos.idProduto', $term);

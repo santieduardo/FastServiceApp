@@ -4,7 +4,7 @@
 	<div class="col-md-6">
 		<div class="btn-group">
 			<a href="<?=site_url('pedidos/novo'); ?>" class="btn btn-default">
-				 <span class="glyphicon glyphicon-plus"></span> Cadastrar
+				 <span class="glyphicon glyphicon-plus"></span> Novo Pedido
 			</a>
 		</div>
 	</div>
@@ -46,10 +46,9 @@
 					<td class="text-right">R$ <?=reais($row->total); ?></td>
 					<td class="text-center hidden-print">
 						<div class="btn-group">
-							<a href="<?=site_url('pedidos/editar/' . $row->idPedido); ?>" class="btn btn-default">
-								<span class="glyphicon glyphicon-pencil"></span>
+							<a href="<?=site_url('pedidos/itens/' . $row->idPedido); ?>" class="btn btn-default">
+								<span class="glyphicon glyphicon-search"></span>
 							</a>
-							
 							<a href="<?=site_url('pedidos/cancelar/' . $row->idPedido); ?>" class="btn btn-default">
 								<span class="glyphicon glyphicon-trash"></span>
 							</a>

@@ -38,6 +38,17 @@ class Pedidos extends CI_Controller {
 		$this->load->view('tpl/footer');
 	}
 	
+	public function itens($idPedido){
+		
+		$itens = $this->produtos->getItensPedido($idPedido);
+		
+		$this->load->view('tpl/header');
+		$this->load->view('pedidos/itens', array(
+			'itens' => $itens
+		));
+		$this->load->view('tpl/footer');
+	}
+	
 	public function novo(){
 		$term = $this->input->get('term');
 		$page = $this->input->get('per_page');
@@ -171,7 +182,7 @@ class Pedidos extends CI_Controller {
 				));
 				
 				success("Pedido realizado com sucesso!");
-				redirect('pedidos/ver/' . $idPedido);
+				redirect('pedidos/novo');
 			} else {
 				fail("O pedido tem que ter um ou mais produtos para poder ser finalizado!");
 				redirect('pedidos/novo');
@@ -201,7 +212,6 @@ class Pedidos extends CI_Controller {
 	}
 	
 	public function editar($pedidoId){
-		die();
 		$pedido = $this->pedidos->getPedidoById($pedidoId);
 		if($pedido){
 		
@@ -224,13 +234,12 @@ class Pedidos extends CI_Controller {
 	
 	private function editarPost($pedido){
 		$data = array(
-			'nome' => $this->input->post('nome'),
-			'razao' => $this->input->post('razao')
+			'qtd' => $this->input->post('qtd')
 		);
 	
 		$tempPedido = $this->pedidos->getPedidoByCNPJ($data['cnpj']);
 		if($tempPedido && $tempPedido->id_pedido != $pedido->id_pedido){
-			throw new Exception('CNPJ jÃ¡ cadastrado. Link <a href="'.site_url('pedidos/editar/' . $tempPedido->id_pedido).'">'.$tempPedido->nome.'</a>');
+			throw new Exception('Pedido já cadastrado. Link <a href="'.site_url('pedidos/editar/' . $tempPedido->id_pedido).'">'.$tempPedido->nome.'</a>');
 		} else {
 			$this->pedidos->updatePedido($pedido->id_pedido, $data);
 			success('Pedido atualizado com sucesso.');
