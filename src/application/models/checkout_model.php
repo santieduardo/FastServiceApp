@@ -6,14 +6,6 @@ class Checkout_model extends CI_Model {
 		parent::__construct();
 	}
 	
-	function getIdPedidoByIdUsuario($idUsuario, $status){
-		return $this->db->select('idPedido, total')
-		->from('pedidos')
-		->where('usuario', $idUsuario)
-		->where('status', $status)
-		->get()->result();
-	}
-	
 	function getProdutoById($produtoId){
 		return $this->db->select('idProduto, nome, preco, arquivo')
 			->from('produtos')

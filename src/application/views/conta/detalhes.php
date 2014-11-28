@@ -12,7 +12,8 @@
 			<th>Nº</th>
 		    <th>Data</th>
 		    <th>Valor Total</th>
-			<th width="120" class="hidden-print"></th>
+		    <th>Status</th>
+			<th width="105" class="hidden-print"></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -21,19 +22,20 @@
 			<?php foreach($pedidos as $row){ ?>
 
 				<tr>
-					<td>
-						<?=$row->idPedido; ?>
-					</td>
-					<td><?=date("d/m/Y h:i"); ?></td>
-					
+					<td><?=pedido_format($row->idPedido); ?></td>
+					<td><?=date("d/m/Y h:i", $row->ctime); ?></td>
 					<td class="text-right">R$ <?=reais($row->total); ?></td>
-					<td class="text-center hidden-print">
-						<div class="btn-group">
-				
-							<a href="<?=site_url('conta/cancelar/' . $row->idPedido); ?>" class="btn btn-default">
-								<span class="glyphicon glyphicon-trash"></span> Cancelar Pedido
+					<td class="text-center"><?=$status[$row->status]->alt; ?></td>
+					<td class="hidden-print">
+						<a href="<?=site_url('checkout/pedido/' . $row->idPedido); ?>" class="btn btn-default">
+							<span class="glyphicon glyphicon-eye-open"></span>
+						</a>
+						
+						<?php if($row->status == 2){ ?>
+							<a href="<?=site_url('conta/cancelar/' . $row->idPedido); ?>" class="btn btn-danger" title="Cancelar Pedido" onclick="javascript:return confirm('Você tem certeza?');">
+								<span class="glyphicon glyphicon-trash"></span>
 							</a>
-						</div>
+						<?php } ?>
 					</td>
 				</tr>
 			<?php } ?>

@@ -1,7 +1,7 @@
 
 	<div class="checkout">
 		<div class="page-header">
-		  <h2>Pedido <small>- <?=str_pad($pedido->idPedido, 10, "0", STR_PAD_LEFT); ?></small></h2>
+		  <h2>Pedido <small>- <?=pedido_format($pedido->idPedido); ?></small></h2>
 		</div>
 		
 		<div class="row">
@@ -37,15 +37,13 @@
 							<div class="well well-sm">
 								Total: <span class="pull-right" id="total">R$ <?=reais($pedido->total); ?></span>
 							</div>
-							<div class="btn-cancelar">
-								<a href="<?=site_url('checkout/cancelar/' . $pedido->idPedido); ?>" class="btn btn-default">
-									<span class="glyphicon glyphicon-trash"></span> Cancelar pedido
-								</a>
-							</div>
-					
-							<div class="text-center">
+							<div class="text-center qr">
 								<img alt="" src="<?=site_url('checkout/qr/'.$pedido->idPedido); ?>" width="400">
 							</div>
+
+							<a href="<?=site_url(); ?>" class="btn btn-default col-xs-12 col-md-4 col-md-offset-4">
+								<span class="glyphicon glyphicon-chevron-left"></span> Voltar
+							</a>
 						
 						<?php } ?>
 					</div>

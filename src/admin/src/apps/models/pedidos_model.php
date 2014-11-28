@@ -7,13 +7,16 @@ class Pedidos_model extends CI_Model {
 	}
 	
 	private function pedidosTerm(&$query, $term){
-		if(is_numeric($term)){
-			$query->like('pedidos.idPedido', $term);
+		if(!empty($term)){
+			if(is_numeric($term)){
+				$query->like('pedidos.idPedido', $term);
+			}
+			
+			$query->or_like(array(
+				'usuarios.nome' => $term,
+				'usuarios.sobrenome' => $term
+			));
 		}
-		
-		$query->or_like(array(
-			'usuarios.nome' => $term
-		));
 	}
 		
 	private function pedidosOrdem(&$query, $ordem){
@@ -36,7 +39,7 @@ class Pedidos_model extends CI_Model {
 	}
 	
 	function getPedidos($page, $term, $ordem){
-		$query = $this->db->select('pedidos.idPedido, usuarios.nome as cliente, pedidos.total, pedidos.status, pedidos.ctime, sum(pedidos_produtos.quantidade) as quantidade')
+		$query = $this->db->select("pedidos.idPedido, usuarios.nome, usuarios.sobrenome, pedidos.total, pedidos.status, pedidos.ctime, sum(pedidos_produtos.quantidade) as quantidade")
 			->from('pedidos')
 			->join('usuarios', 'pedidos.usuario = usuarios.idUsuario', 'inner')
 			->join('pedidos_produtos', 'pedidos.idPedido = pedidos_produtos.pedido', 'left outer')

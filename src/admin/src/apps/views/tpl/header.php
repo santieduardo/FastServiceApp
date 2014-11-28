@@ -43,12 +43,12 @@
 		</div>
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
-				<!-- Novo -->
+				<!-- Pedidos -->
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Pedido <span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li><a href="<?=site_url('pedidos/novo'); ?>">Fazer Pedido</a></li>
-						<li><a href="<?=site_url('pedidos/lista'); ?>">Consultar Pedido</a></li>
+						<li><a href="<?=site_url('pedidos'); ?>">Consultar Pedido</a></li>
 						
 					</ul>
 				</li>		

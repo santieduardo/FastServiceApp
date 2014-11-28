@@ -8,39 +8,33 @@ use Facebook\GraphUser;
 class Conta extends CI_Controller {
 	
 	public function detalhes(){
-		$this->load->model('checkout_model', 'checkout');
+		if(!isLogged()) show_404();
+		
 		$this->load->model('conta_model', 'conta');
+		$pedidos = $this->conta->getPedidosByIdUsuario(getUserId());
 		
 		$this->load->view('tpl/header');
-
-		$idUsuario = $this->session->userdata('usuario');
-
-		$status = 2;
-		
-		$idPedido = $this->checkout->getIdPedidoByIdUsuario($idUsuario->idUsuario, $status);
-
 		$this->load->view('conta/detalhes', array (
-				'pedidos' => $idPedido
+			'pedidos' => $pedidos,
+			'status' => getStatus()
 		));
 	
 		$this->load->view('tpl/footer');
-		
 	}
 	
 	public function cancelar($pedidoId){
-		$this->load->model('checkout_model', 'checkout');
-	
-		$this->checkout->updatePedido($pedidoId, array(
-				'status' => 0
-		));
-	
-		redirect('conta/detalhes');
+		if(!isLogged()) show_404();
 		
-		$this->load->view('tpl/header');
-		$this->load->view('checkout/cancelar', array(
-				'pedido' => $pedido
-		));
-		$this->load->view('tpl/footer');
+		$this->load->model('conta_model', 'conta');
+		$pedido = $this->conta->getPedidoByIdUsuario(getUserId(), $pedidoId);
+		if($pedido){
+			$this->conta->updatePedido($pedidoId, array(
+				'status' => 0
+			));
+		
+			redirect('conta/detalhes');
+		} else
+			show_404();
 
 	}
 
@@ -159,8 +153,8 @@ class Conta extends CI_Controller {
     	if(isLogged()) show_404();
     
     	FacebookSession::setDefaultApplication(
-    	$this->config->item('facebook_appid'),
-    	$this->config->item('facebook_secret')
+    		$this->config->item('facebook_appid'),
+    		$this->config->item('facebook_secret')
     	);
     }
     
@@ -187,16 +181,16 @@ class Conta extends CI_Controller {
     			$data = $response->getGraphObject(GraphUser::className());
     
     			$user = array(
-    					'nome' => $data->getFirstName(),
-    					'sobrenome' => $data->getLastName(),
-    					'email' => $data->getProperty("email"),
-    					'ctime' => time()
+    				'nome' => $data->getFirstName(),
+    				'sobrenome' => $data->getLastName(),
+    				'email' => $data->getProperty("email"),
+    				'ctime' => time()
     			);
     
     			$connection = array(
-    					'id' => $data->getId(),
-    					'token' => $session->getToken(),
-    					'tipo' => 1
+    				'id' => $data->getId(),
+    				'token' => $session->getToken(),
+    				'tipo' => 1
     			);
     
     			$this->tryLoginFacebook($connection, $user);
@@ -231,8 +225,9 @@ class Conta extends CI_Controller {
     }
     
     public function logoff(){
-    	$this->session->sess_destroy();
-    
+    	$this->session->unset_userdata('usuario');
+		$this->session->unset_userdata('carrinho');
+
     	redirect('');
     }
     

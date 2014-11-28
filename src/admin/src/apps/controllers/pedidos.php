@@ -8,6 +8,7 @@ class Pedidos extends CI_Controller {
 		$this->load->helper('pedidos');
 		$this->load->model('pedidos_model', 'pedidos');
 		$this->load->model('produtos_model', 'produtos');
+		$this->load->model('usuarios_model', 'usuarios');
 	}
 
 	public function index(){
@@ -18,6 +19,11 @@ class Pedidos extends CI_Controller {
 		if(!is_numeric($page)) $page = 0;
 		if(!is_numeric($ordem)) $ordem = 0;
 		
+		if(is_numeric($term)){
+			$pedido = $this->pedidos->getPedidoById($term);
+			if($pedido)
+				redirect('pedidos/itens/' . $pedido->idPedido);
+		}
 		
 		$size = $this->pedidos->getPedidosSize($term);
 		$pedidos = $this->pedidos->getPedidos($page, $term, $ordem);
@@ -39,14 +45,19 @@ class Pedidos extends CI_Controller {
 	}
 	
 	public function itens($idPedido){
-		
-		$itens = $this->produtos->getItensPedido($idPedido);
-		
-		$this->load->view('tpl/header');
-		$this->load->view('pedidos/itens', array(
-			'itens' => $itens
-		));
-		$this->load->view('tpl/footer');
+		$pedido = $this->pedidos->getPedidoById($idPedido);
+		if($pedido){		
+			$itens = $this->produtos->getItensPedido($pedido->idPedido);
+			$usuario = $this->usuarios->getUsuarioById($pedido->usuario);
+			$this->load->view('tpl/header');
+			$this->load->view('pedidos/itens', array(
+				'pedido' => $pedido,
+				'itens' => $itens,
+				'usuario' => $usuario
+			));
+			$this->load->view('tpl/footer');
+		} else 
+			show_404();
 	}
 	
 	public function novo(){
@@ -188,6 +199,19 @@ class Pedidos extends CI_Controller {
 				redirect('pedidos/novo');
 			}
 		}
+	}
+	
+	public function concluir($pedidoId){
+		$pedido = $this->pedidos->getPedidoById($pedidoId);
+		if($pedido){
+			$this->pedidos->updatePedido($pedido->idPedido, array(
+				'status' => 1
+			));
+	
+			success("Pedido concluído com sucesso!");
+			redirect('pedidos');
+		} else
+			show_404();
 	}
 	
 	public function cancelar($pedidoId){

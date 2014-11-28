@@ -9,7 +9,7 @@
 				<p>Tem certeza que quer cancelar o pedido <strong><?=$pedido->idPedido; ?></strong>?</p>
 				<p>
 					&nbsp;
-					<a href="<?=site_url('pedidos'); ?>" class="btn btn-default col-md-3">
+					<a onclick="javascript: history.back();" class="btn btn-default col-md-3">
 						Cancelar
 					</a>
 					<button type="submit" class="btn btn-danger col-md-3">

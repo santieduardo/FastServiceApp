@@ -52,7 +52,8 @@ class Dashboard extends CI_Controller {
 	
 	public function logoff(){
 		$this->user->check404();
-		$this->session->sess_destroy();
+		$this->session->unset_userdata('admin');
+		$this->session->unset_userdata('carrinho_admin');
 		redirect('login?logoff=1');
 	}
 }

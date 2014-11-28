@@ -64,9 +64,10 @@ a { color: #052f83; text-decoration: none; }
 
 
 .checkout .btn-cancelar { float: right; }
+.qr img { width: 300px; }
 
 /*******/
 @media only screen and (min-width: 768px) {
 	.navbar-default .navbar-nav .open .dropdown-menu>li>a { color: #000; }
+	.qr img { width: 400px; }
 }
-

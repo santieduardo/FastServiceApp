@@ -11,7 +11,7 @@
 <div class="row">
 	<div class="col-md-12 text-center">
 		<a href="<?=site_url('pedidos'); ?>" class="thumbnail">
-			<span class="glyphicon glyphicon-refresh"></span>
+			<span class="glyphicon glyphicon-search"></span>
 			<br>
 			Consultar Pedido
 		</a>

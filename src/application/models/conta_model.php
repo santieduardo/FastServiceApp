@@ -61,5 +61,27 @@ class Conta_model extends CI_Model {
     	$this->db->insert('conexoes', $data);
     }
     
+    
+    function getPedidosByIdUsuario($idUsuario){
+    	return $this->db->select('idPedido, total, ctime, status')
+	    	->from('pedidos')
+	    	->where('usuario', $idUsuario)
+	    	->order_by('ctime', 'desc')
+	    	->get()->result();
+    }
+    
+    function getPedidoByIdUsuario($idUsuario, $idPedido){
+    	return $this->db->select('idPedido, total, ctime, status')
+	    	->from('pedidos')
+	    	->where(array(
+	    		'usuario' => $idUsuario,
+	    		'idPedido' => $idPedido
+	    	))
+	    	->get()->row();
+    }
+    
+    function updatePedido($idPedido, $data){
+    	$this->db->where('idPedido', $idPedido)->update('pedidos', $data);
+    }
 
 }

@@ -30,7 +30,7 @@
 		    <th>Data</th>
 		    <th>Cliente</th>
 		    <th>Valor Total</th>
-			<th width="120" class="hidden-print"></th>
+			<th width="105" class="hidden-print"></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -38,21 +38,22 @@
 			<?php foreach($pedidos as $row){ ?>
 				<tr>
 					<td>
-						<span class="glyphicon glyphicon-tag text-<?=$status[$row->status]->classe; ?>"></span>
+						<span class="glyphicon glyphicon-tag legend-<?=$status[$row->status]->classe; ?>"></span>
 						<?=$row->idPedido; ?>
 					</td>
-					<td><?=date("d/m/Y h:i"); ?></td>
-					<td><?=$row->cliente; ?></td>
+					<td><?=date("d/m/Y h:i", $row->ctime); ?></td>
+					<td><?=$row->nome. ' ' . $row->sobrenome; ?></td>
 					<td class="text-right">R$ <?=reais($row->total); ?></td>
-					<td class="text-center hidden-print">
-						<div class="btn-group">
-							<a href="<?=site_url('pedidos/itens/' . $row->idPedido); ?>" class="btn btn-default">
-								<span class="glyphicon glyphicon-search"></span>
-							</a>
-							<a href="<?=site_url('pedidos/cancelar/' . $row->idPedido); ?>" class="btn btn-default">
+					<td class=" hidden-print">
+
+						<a href="<?=site_url('pedidos/itens/' . $row->idPedido); ?>" class="btn btn-default" title="Detalhes do Pedido">
+							<span class="glyphicon glyphicon-eye-open"></span>
+						</a>
+						<?php if($row->status == 2){?>
+							<a href="<?=site_url('pedidos/cancelar/' . $row->idPedido); ?>" class="btn btn-danger" title="Cancelar Pedido">
 								<span class="glyphicon glyphicon-trash"></span>
 							</a>
-						</div>
+						<?php }?>
 					</td>
 				</tr>
 			<?php } ?>

@@ -3,6 +3,10 @@ function reais($number){
 	return number_format($number, 2, ',', '.');
 }
 
+function pedido_format($int){
+	return str_pad($int, 10, "0", STR_PAD_LEFT);
+}
+
 function pagination($options = array()){
 	$ci =& get_instance();
 	$ci->pagination->initialize(array_merge(array(
